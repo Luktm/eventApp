@@ -53,7 +53,7 @@ class _AuthScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                child: LogoWidget(height: 120,),
+                child: LogoWidget(imgHeight: 120, paddingTop: 10,),
                 padding: EdgeInsets.only(top: 30),
               ),
               SizedBox(

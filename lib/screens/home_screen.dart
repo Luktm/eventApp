@@ -21,12 +21,9 @@ class HomeScreen extends StatelessWidget {
       bodyChild: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(top: 30),
-            alignment: Alignment.center,
-            child: LogoWidget(
-              height: 100,
-            ),
+          LogoWidget(
+            imgHeight: 100,
+            paddingTop: 30,
           ),
           SizedBox(
             height: 10,
@@ -62,7 +59,8 @@ class HomeScreen extends StatelessWidget {
               itemCount: entries.length,
               padding: const EdgeInsets.only(left: 20, right: 20),
               itemBuilder: (ctx, i) => Card(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
                 elevation: 5.0,
                 margin: EdgeInsets.symmetric(vertical: 10),
                 clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -70,24 +68,48 @@ class HomeScreen extends StatelessWidget {
                   padding: EdgeInsets.all(20),
                   child: ClipRRect(
                     // borderRadius: BorderRadius.circular(100),
-                    child: Row(
+                    child: Column(
                       children: <Widget>[
-                        Icon(
-                          Icons.notifications_none,
-                          color: HexColor.accentColor,
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                          child: Text(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim.',
-                            style: TextStyle(
-                              fontSize: 13,
+                        Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.notifications_none,
                               color: HexColor.accentColor,
-                              fontWeight: FontWeight.w700,
                             ),
-                          ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Text(
+                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim.',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: HexColor.accentColor,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Icon(
+                              Icons.access_time,
+                              color: HexColor.greyColor,
+                              size: 16,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              '1 hrs ago',
+                              style: TextStyle(
+                                fontSize: 11,
+                              ),
+                            )
+                          ],
                         ),
                       ],
                     ),

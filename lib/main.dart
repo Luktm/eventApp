@@ -10,6 +10,7 @@ import './helpers/hex_color.dart';
 import './screens/login_screen.dart';
 import './screens/onboarding_screen.dart';
 import './screens/home_screen.dart';
+import './screens/location_map.dart';
 
 void main() => runApp(MyApp());
 
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
         themeMode: brightness == Brightness.light ? ThemeMode.light : ThemeMode.dark,
       ),
       ios: (_) => CupertinoAppData(theme: cupertinoTheme, color: primaryColor),
-      home: HomeScreen(),
+      home: LocationMap(),
     );
   }
 }
