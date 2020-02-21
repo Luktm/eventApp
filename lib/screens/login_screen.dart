@@ -40,8 +40,8 @@ class _AuthScreenState extends State<LoginScreen> {
                 width: deviceData.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    bottomLeft: const Radius.circular(200.0),
-                    bottomRight: const Radius.circular(200.0),
+                    bottomLeft: Radius.circular(200.0),
+                    bottomRight: Radius.circular(200.0),
                   ),
                   color: Colors.white,
                   boxShadow: [
@@ -53,7 +53,10 @@ class _AuthScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                child: LogoWidget(imgHeight: 120, paddingTop: 10,),
+                child: LogoWidget(
+                  imgHeight: 120,
+                  paddingTop: 10,
+                ),
                 padding: EdgeInsets.only(top: 30),
               ),
               SizedBox(
@@ -73,7 +76,7 @@ class _AuthScreenState extends State<LoginScreen> {
                   Text(
                     'Sign In',
                     style: TextStyle(
-                      color: ThemeData.light().textTheme.subtitle.color,
+                      color: Theme.of(context).textTheme.subtitle1.color,
                       fontSize: 14,
                       fontWeight: FontWeight.w200,
                     ),
@@ -103,29 +106,30 @@ class _AuthScreenState extends State<LoginScreen> {
                         child: PlatformText(
                           'Email',
                           textAlign: TextAlign.left,
-                          style: TextStyle(color: ThemeData.light().primaryColor),
+                          style:
+                              TextStyle(color: ThemeData.light().primaryColor),
                         ),
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Container(
-                        
                         // height: 50,
                         decoration: BoxDecoration(
                           color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 2,
+                              blurRadius: 10,
+                              offset:
+                                  Offset(0, 7), // changes position of shadow
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                offset:
-                                    Offset(0, 7), // changes position of shadow
-                              ),
-                            ]),
+                          ],
+                        ),
                         child: PlatformTextField(
                           // style: TextStyle(height: 1.7, fontSize: 20),
                           android: (_) => MaterialTextFieldData(
@@ -147,7 +151,6 @@ class _AuthScreenState extends State<LoginScreen> {
                                 borderRadius: BorderRadius.circular(25.0),
                                 color: Colors.white,
                               ),
-
                               // style: TextStyle(height: 2.0, ),
                               onChanged: (String text) {
                                 setState(() {
@@ -164,7 +167,8 @@ class _AuthScreenState extends State<LoginScreen> {
                         child: PlatformText(
                           'Password',
                           textAlign: TextAlign.left,
-                          style: TextStyle(color: ThemeData.light().primaryColor),
+                          style:
+                              TextStyle(color: ThemeData.light().primaryColor),
                         ),
                       ),
                       SizedBox(
@@ -173,7 +177,7 @@ class _AuthScreenState extends State<LoginScreen> {
                       Container(
                         // height: 50,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                            color: Colors.white,
                             borderRadius: BorderRadius.all(
                               Radius.circular(30),
                             ),
@@ -228,7 +232,13 @@ class _AuthScreenState extends State<LoginScreen> {
                         child: RaisedButton(
                           color: ThemeData.light().primaryColor,
                           onPressed: () {},
-                          child: Text("Login", style: TextStyle(color: Colors.white, fontSize: 20),),
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(
