@@ -13,7 +13,7 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Include required permissions for Google Maps API to run. -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- Include required permissions for Google Maps API to run. -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature
@@ -60,7 +60,8 @@
         <activity
             android:name="io.flutter.plugins.urllauncher.WebViewActivity"
             android:exported="false"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" /> <!-- Needs to be explicitly declared on P+ -->
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity android:name="de.mintware.barcode_scan.BarcodeScannerActivity" /> <!-- Needs to be explicitly declared on P+ -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

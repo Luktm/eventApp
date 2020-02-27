@@ -1,273 +1,253 @@
-import 'dart:async';
-import 'dart:math';
-import 'dart:ui';
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:maps_launcher/maps_launcher.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'dart:io' show Platform;
 
+import '../screens/location_screen.dart';
+import '../screens/login_screen.dart';
+import '../screens/lucky_draw_screen.dart';
+import '../screens/notification_screen.dart';
+import '../screens/profile_qr_screen.dart';
+import '../screens/programme_screen.dart';
+import '../screens/qr_full_screen.dart';
+
+import '../widgets/safe_area_widget.dart';
 import '../helpers/hex_color.dart';
-import '../helpers/date.dart';
-
-import '../widgets/scaffold_widget.dart';
-import '../widgets/logo_widget.dart';
-import '../widgets/card_widget.dart';
 
 class HomeScreen extends StatefulWidget {
+  // final String title;
+  // final bool hasAppbar;
+  // final List<Widget> appbarButton;
+  // final Widget bodyChild;
+
+  // ScaffoldWidget({
+  //   this.title,
+  //   this.hasAppbar = false,
+  //   this.appbarButton,
+  //   this.bodyChild,
+  // });
+
+  HomeScreen({Key key}) : super(key: key);
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeScreen createState() => _HomeScreen();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  Completer<GoogleMapController> _controller = Completer();
+class _HomeScreen extends State<HomeScreen> {
+  final Color backgroundColor = new HexColor('#FAFEFF');
+  int _currentIndex = 0;
 
-  static final LatLng _initCenter = LatLng(45.521563, -122.677433);
+  final GlobalKey _globalKey = GlobalKey();
+  final CupertinoTabController _cupertinoTabController =
+      CupertinoTabController();
 
-  LatLng _lastMapPosition = _initCenter;
+  final List<Widget> _children = [
+    LocationScreen(),
+    ProgrammeScreen(),
+    LuckyDrawScreen(),
+    ProfileQRScreen(),
+  ];
 
-  static final LatLng _center =
-      LatLng(_initCenter.latitude + 0.011500, _initCenter.longitude);
+  final List<String> _title = [
+    'Location',
+    'Programme',
+    'Lucky Draw',
+    'Profile',
+  ];
 
-  void _onMapCreated(GoogleMapController controller) {
-    _controller.complete(controller);
-  }
-
-  // String weekday(weekdayInt) {
-  //   switch (weekdayInt) {
-  //     case 1:
-  //       return 'Mon';
-  //       break;
-  //     case 2:
-  //       return 'Tue';
-  //       break;
-  //     case 3:
-  //       return 'Wed';
-  //       break;
-  //     case 4:
-  //       return 'Thu';
-  //     case 5:
-  //       return 'Fri';
-  //     case 6:
-  //       return 'Sat';
-  //     case 7:
-  //       return 'Sun';
-  //       break;
-  //     default:
-  //       return 'No Day';
-  //   }
-  // }
-
-  @override
-  void dispose() {
-    super.dispose();
+  Widget platformAppBar() {
+    return PlatformAppBar(
+      title: Center(
+          child: Text(
+        _title[_currentIndex],
+        textAlign: TextAlign.center,
+      )),
+      trailingActions: _currentIndex == 0
+          ? [
+              PlatformIconButton(
+                iosIcon: Icon(CupertinoIcons.bell),
+                androidIcon: Icon(Icons.notifications_none),
+                onPressed: () => Navigator.push(
+                  context,
+                  platformPageRoute(
+                    maintainState: false,
+                    builder: (
+                      BuildContext context,
+                    ) =>
+                        NotificationScreen(),
+                    context: context,
+                  ),
+                ),
+              ),
+            ]
+          : null,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final double locationInfoSizebWidth = 20.0;
-    final double locationInfoSizedBoxMargin = 20.0;
-    final double tableRowSizedBoxHeight = 30;
+    var deviceData = MediaQuery.of(context);
 
-    // final DateTime now = DateTime.now();
-    // final String formattedDate = DateFormat('yyyy MMM dd').format(now);
-    // final int weekdayInt = now.weekday;
-
-    return ScaffoldWidget(
-      appbarButton: <Widget>[],
-      hasAppbar: true,
-      title: 'Location',
-      bodyChild: SingleChildScrollView(
-          child: CardWidget(
-        title: 'Venue & Even Detail',
-        children: <Widget>[
-          
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Location Map',
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontSize: 12,
-                color: HexColor.accentColor,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            // width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
-            height: 130,
-            child: Stack(
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: GoogleMap(
-                    rotateGesturesEnabled: false,
-                    scrollGesturesEnabled: false,
-                    tiltGesturesEnabled: false,
-                    buildingsEnabled: false,
-                    gestureRecognizers: Set()
-                      ..add(Factory<PanGestureRecognizer>(
-                          () => PanGestureRecognizer()))
-                      ..add(Factory<ScaleGestureRecognizer>(
-                          () => ScaleGestureRecognizer()))
-                      ..add(Factory<TapGestureRecognizer>(
-                          () => TapGestureRecognizer()))
-                      ..add(Factory<VerticalDragGestureRecognizer>(
-                          () => VerticalDragGestureRecognizer())),
-                    compassEnabled: false,
-                    zoomGesturesEnabled: false,
-                    mapType: MapType.normal,
-                    myLocationEnabled: true,
-                    mapToolbarEnabled: false,
-                    myLocationButtonEnabled: false,
-                    onMapCreated: _onMapCreated,
-                    markers: {
-                      Marker(
-                        markerId: MarkerId(
-                          _lastMapPosition.toString(),
+    return PlatformScaffold(
+        // key: _globalKey,
+        ios: (_) => CupertinoPageScaffoldData(
+              navigationBar: CupertinoNavigationBar(
+                transitionBetweenRoutes: false,
+                heroTag: UniqueKey(),
+                middle: Text(_title[_currentIndex]),
+                trailing: CupertinoButton(
+                        onPressed: () => Navigator.pushNamed(
+                            context, NotificationScreen.routeName),
+                        child: Icon(
+                          CupertinoIcons.bell,
                         ),
-                        position: _lastMapPosition,
-                        // infoWindow: InfoWindow(
-                        //     title: "Location Place",
-                        //     snippet: '5 star hotel'),
-                        icon: BitmapDescriptor.defaultMarker,
-                      ),
-                    },
-                    initialCameraPosition: CameraPosition(
-                      target: _center,
-                      zoom: 11.0,
+                      )
+                    ,
+              ),
+              controller: _cupertinoTabController,
+              bottomTabBar: CupertinoTabBar(
+                currentIndex: _currentIndex,
+                onTap: (index) => setState(
+                  () {
+                    _currentIndex = index;
+                  },
+                ),
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.home),
+                    title: Text('adf'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.profile_circled),
+                    title: Text('adf'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.profile_circled),
+                    title: Text('adf'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.profile_circled),
+                    title: Text('adf'),
+                  ),
+                ],
+              ),
+              body: SafeAreaWidget(
+                child: SafeAreaWidget(
+                  child: Container(
+                    constraints: BoxConstraints(
+                      minHeight: deviceData.size.height,
                     ),
+                    color: backgroundColor,
+                    // child: widget.bodyChild,
+                    child: _children[_currentIndex],
                   ),
                 ),
-                Positioned(
-                  bottom: 0,
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: Opacity(
-                    opacity: 0,
-                    child: RaisedButton(
-                      color: Colors.transparent,
-                      disabledColor: Colors.transparent,
-                      onPressed: () => MapsLauncher.launchCoordinates(
-                          _initCenter.latitude, _initCenter.longitude),
-                      // child: Text('abc'),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Table(
-            // border: TableBorder.all(),
-            // defaultColumnWidth: FlexColumnWidth(0.3),
-            columnWidths: {
-              0: FractionColumnWidth(.3),
-              // 1: FractionColumnWidth(.1)
-            },
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            children: [
-              TableRow(
-                children: [
-                  Text(
-                    'Venue',
-                    style: TextStyle(color: HexColor.greyColor),
-                  ),
-                  Text(
-                    'Hillton Kuala Lumpur Dining',
-                    style: TextStyle(
-                      color: HexColor.accentColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
+        android: (_) => MaterialScaffoldData(
+              appBar: AppBar(
+                centerTitle: true,
+                title: Text(
+                  _title[_currentIndex],
+                ),
+                actions: _currentIndex == 0
+                    ? [
+                        IconButton(
+                          onPressed: () => Navigator.of(context)
+                              .pushNamed(NotificationScreen.routeName),
+                          icon: Icon(
+                            Icons.notifications_none,
+                          ),
+                        ),
+                      ]
+                    : null,
               ),
-              TableRow(
-                children: [
-                  SizedBox(
-                    height: tableRowSizedBoxHeight,
-                  ),
-                  SizedBox(
-                    height: tableRowSizedBoxHeight,
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text(
-                    'Date ',
-                    style: TextStyle(color: HexColor.greyColor),
-                  ),
-                  Text(
-                    '${Date.formattedDate} (${Date.weekday()})',
-                    style: TextStyle(
-                      color: HexColor.accentColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  SizedBox(
-                    height: tableRowSizedBoxHeight,
-                  ),
-                  SizedBox(
-                    height: tableRowSizedBoxHeight,
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text(
-                    'Time',
-                    style: TextStyle(color: HexColor.greyColor),
-                  ),
-                  Text(
-                    '7pm-9pm ',
-                    style: TextStyle(
-                      color: HexColor.accentColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          ButtonTheme(
-            minWidth: 200.0,
-            child: RaisedButton(
-              child: Text(
-                'Open Map',
-                style: TextStyle(
-                  color: Colors.white,
+              body: SafeAreaWidget(
+                child: Container(
+                  color: backgroundColor,
+                  // child: widget.bodyChild,
+                  child: _children[_currentIndex],
                 ),
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
+              bottomNavBar: BottomNavigationBar(
+                currentIndex: _currentIndex,
+                onTap: (int index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.location_on,
+                    ),
+                    title: Text('Location'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.list),
+                    title: Text('List'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.local_activity,
+                    ),
+                    title: Text('Lucky Draw'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.person,
+                    ),
+                    title: Text('Profile'),
+                  ),
+                ],
+                type: BottomNavigationBarType.fixed,
               ),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {},
             ),
-          ),
-        ],
-      )),
-    );
+        bottomNavBar: PlatformNavBar(),
+        
+        // backgroundColor: backgroundColor,
+        // appBar: platformAppBar(),
+        // body: SafeAreaWidget(
+        //   child: Container(
+        //     color: backgroundColor,
+        //     // child: widget.bodyChild,
+        //     child: _children[_currentIndex],
+        //   ),
+        // ),
+        // bottomNavBar: PlatformNavBar(
+        //   currentIndex: _currentIndex,
+        //   itemChanged: (index) => setState(() {
+        //     _currentIndex = index;
+        //   }),
+        //   items: [
+        //     BottomNavigationBarItem(
+        //       icon: Icon(
+        //         Icons.location_on,
+        //       ),
+        //       title: Text('Location'),
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.list),
+        //       title: Text('List'),
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: Icon(
+        //         Icons.local_activity,
+        //       ),
+        //       title: Text('Lucky Draw'),
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: Icon(
+        //         Icons.person,
+        //       ),
+        //       title: Text('Profile'),
+        //     ),
+        //   ],
+        // ),
+        // iosContentPadding: false,
+        // iosContentBottomPadding: false,
+        );
   }
 }

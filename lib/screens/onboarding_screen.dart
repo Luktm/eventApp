@@ -1,5 +1,5 @@
 import 'package:event_app/widgets/logo_widget.dart';
-import 'package:event_app/widgets/scaffold_widget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -124,8 +124,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     var deviceData = MediaQuery.of(context);
 
-    return ScaffoldWidget(
-      bodyChild: Container(
+    return PlatformScaffold(
+      body: Container(
         // height: deviceData.size.height,
         child: Column(
           // crossAxisAlignment: CrossAxisAlignment.center,

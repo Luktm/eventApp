@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
+import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -12,8 +13,6 @@ import 'package:intl/intl.dart';
 import '../helpers/hex_color.dart';
 import '../helpers/date.dart';
 
-import '../widgets/scaffold_widget.dart';
-import '../widgets/logo_widget.dart';
 import '../widgets/card_widget.dart';
 
 class ProgrammeScreen extends StatelessWidget {
@@ -24,7 +23,7 @@ class ProgrammeScreen extends StatelessWidget {
 
   Widget sizedHeightWidget() {
     return SizedBox(
-      height: sizedHeight,
+      height: Platform.isAndroid ? sizedHeight : 35,
     );
   }
 
@@ -50,7 +49,7 @@ class ProgrammeScreen extends StatelessWidget {
   Widget timeWidget(BuildContext context, String time) {
     return Text(
       time,
-      style: Theme.of(context).textTheme.subtitle1,
+      style: Platform.isAndroid ?  Theme.of(context).textTheme.subtitle1 : TextStyle(fontSize: 12,),
     );
   }
 
@@ -60,13 +59,12 @@ class ProgrammeScreen extends StatelessWidget {
     );
   }
 
-  Widget programContainerWidget({bool containerPrimaryColor}) {
+  Widget programContainerWidget(deviceData, {bool containerPrimaryColor}) {
     return Container(
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color:
-            containerPrimaryColor ? HexColor.primaryColor : HexColor('#F2F2F2'),
+        color: containerPrimaryColor ? HexColor.primaryColor : HexColor('#F2F2F2'),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
@@ -83,109 +81,113 @@ class ProgrammeScreen extends StatelessWidget {
         'Neque porro quisquam est qui ',
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: containerPrimaryColor ? Colors.white : HexColor.primaryColor,
-            fontSize: 14),
+          color: containerPrimaryColor ? Colors.white : HexColor.primaryColor,
+          fontSize: (deviceData.size.width - deviceData.padding.bottom) * 0.035,
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldWidget(
-      appbarButton: <Widget>[],
-      hasAppbar: true,
-      title: 'Programme',
-      bodyChild: SingleChildScrollView(
-        child: CardWidget(
-          title: 'Programme Agenda',
-          children: <Widget>[
-            Text(
-              '${Date.formattedDate} (${Date.weekday()})',
-              style: TextStyle(
-                fontSize: 12,
-                color: ThemeData.light().primaryColor,
-              ),
+    var deviceData = MediaQuery.of(context);
+    
+    return SingleChildScrollView(
+      child: CardWidget(
+        title: 'Programme Agenda',
+        children: <Widget>[
+          Text(
+            '${Date.formattedDate} (${Date.weekday()})',
+            style: TextStyle(
+              fontSize: 12,
+              color: ThemeData.light().primaryColor,
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: timeLinePaddingTop),
-                  child: Column(
-                    children: <Widget>[
-                      timeWidget(context, '7pm'),
-                      sizedHeightWidget(),
-                      timeWidget(context, '7.30pm'),
-                      sizedHeightWidget(),
-                      timeWidget(context, '8pm'),
-                      sizedHeightWidget(),
-                      timeWidget(context, '8.30pm'),
-                      sizedHeightWidget(),
-                      timeWidget(context, '9pm'),
-                      sizedHeightWidget(),
-                      timeWidget(context, '9.30pm'),
-                      sizedHeightWidget(),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: timeLinePaddingTop),
-                  child: Column(
-                    children: <Widget>[
-                      circleBoxWidget(),
-                      lineWidget(),
-                      circleBoxWidget(),
-                      lineWidget(),
-                      circleBoxWidget(),
-                      lineWidget(),
-                      circleBoxWidget(),
-                      lineWidget(),
-                      circleBoxWidget(),
-                      lineWidget(),
-                      circleBoxWidget(),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Column(
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: timeLinePaddingTop),
+                child: Column(
                   children: <Widget>[
-                    programContainerWidget(
-                      containerPrimaryColor: true,
-                    ),
-                    programNameSizedWidget(),
-                    programContainerWidget(
-                      containerPrimaryColor: false,
-                    ),
-                    programNameSizedWidget(),
-                    programContainerWidget(
-                      containerPrimaryColor: true,
-                    ),
-                    programNameSizedWidget(),
-                    programContainerWidget(
-                      containerPrimaryColor: false,
-                    ),
-                    programNameSizedWidget(),
-                    programContainerWidget(
-                      containerPrimaryColor: true,
-                    ),
-                    programNameSizedWidget(),
-                    programContainerWidget(
-                      containerPrimaryColor: false,
-                    ),
+                    timeWidget(context, '7pm'),
+                    sizedHeightWidget(),
+                    timeWidget(context, '7.30pm'),
+                    sizedHeightWidget(),
+                    timeWidget(context, '8pm'),
+                    sizedHeightWidget(),
+                    timeWidget(context, '8.30pm'),
+                    sizedHeightWidget(),
+                    timeWidget(context, '9pm'),
+                    sizedHeightWidget(),
+                    timeWidget(context, '9.30pm'),
+                    sizedHeightWidget(),
                   ],
-                )
-              ],
-            )
-          ],
-        ),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: timeLinePaddingTop),
+                child: Column(
+                  children: <Widget>[
+                    circleBoxWidget(),
+                    lineWidget(),
+                    circleBoxWidget(),
+                    lineWidget(),
+                    circleBoxWidget(),
+                    lineWidget(),
+                    circleBoxWidget(),
+                    lineWidget(),
+                    circleBoxWidget(),
+                    lineWidget(),
+                    circleBoxWidget(),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Column(
+                children: <Widget>[
+                  programContainerWidget(
+                    deviceData,
+                    containerPrimaryColor: true,
+                  ),
+                  programNameSizedWidget(),
+                  programContainerWidget(
+                    deviceData,
+                    containerPrimaryColor: false,
+                  ),
+                  programNameSizedWidget(),
+                  programContainerWidget(
+                    deviceData,
+                    containerPrimaryColor: true,
+                  ),
+                  programNameSizedWidget(),
+                  programContainerWidget(
+                    deviceData,
+                    containerPrimaryColor: false,
+                  ),
+                  programNameSizedWidget(),
+                  programContainerWidget(
+                    deviceData,
+                    containerPrimaryColor: true,
+                  ),
+                  programNameSizedWidget(),
+                  programContainerWidget(
+                    deviceData,
+                    containerPrimaryColor: false,
+                  ),
+                ],
+              )
+            ],
+          )
+        ],
       ),
     );
   }

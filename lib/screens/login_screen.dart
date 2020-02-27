@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-import '../widgets/scaffold_widget.dart';
+import '../providers/auth.dart';
+
 import '../widgets/logo_widget.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,15 +22,30 @@ class _AuthScreenState extends State<LoginScreen> {
   final _passwordFocusNode = FocusNode();
   bool _eyeoff = true;
 
-  String email;
-  String password;
+  var _isInit = true;
+
+  Map<String, String> _authData = {
+    'email': '',
+    'password': '',
+  };
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<Auth>(context).login('email', 'password');
+    }
+
+    _isInit = false;
+
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
     var deviceData = MediaQuery.of(context).size;
 
-    return ScaffoldWidget(
-      bodyChild: SingleChildScrollView(
+    return PlatformScaffold(
+      body: SingleChildScrollView(
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,9 +72,13 @@ class _AuthScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                child: LogoWidget(
-                  imgHeight: 120,
-                  paddingTop: 10,
+                child: Container(
+                  padding: EdgeInsets.only(top: 10),
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    'assets/images/event-logo.png',
+                    height: 120,
+                  ),
                 ),
                 padding: EdgeInsets.only(top: 30),
               ),
@@ -136,7 +159,7 @@ class _AuthScreenState extends State<LoginScreen> {
                             controller: emailController,
                             onChanged: (String text) {
                               setState(() {
-                                email = text;
+                                _authData['email'] = text;
                               });
                             },
                             decoration: InputDecoration(
@@ -154,7 +177,7 @@ class _AuthScreenState extends State<LoginScreen> {
                               // style: TextStyle(height: 2.0, ),
                               onChanged: (String text) {
                                 setState(() {
-                                  email = text;
+                                  _authData['email'] = text;
                                 });
                               }),
                         ),
@@ -196,7 +219,7 @@ class _AuthScreenState extends State<LoginScreen> {
                             obscureText: true,
                             onChanged: (String text) {
                               setState(() {
-                                password = text;
+                                _authData['password'] = text;
                               });
                             },
                             decoration: InputDecoration(
@@ -215,7 +238,7 @@ class _AuthScreenState extends State<LoginScreen> {
                               // style: TextStyle(height: 2.0, ),
                               onChanged: (String text) {
                                 setState(() {
-                                  password = text;
+                                  _authData['password'] = text;
                                 });
                               }),
                         ),
@@ -231,7 +254,7 @@ class _AuthScreenState extends State<LoginScreen> {
                         ),
                         child: RaisedButton(
                           color: ThemeData.light().primaryColor,
-                          onPressed: () {},
+                          onPressed: null,
                           child: Text(
                             "Login",
                             style: TextStyle(

@@ -14,7 +14,9 @@
 14    <uses-permission android:name="android.permission.INTERNET" />
 14-->/Users/cspeed/Desktop/event_app/android/app/src/debug/AndroidManifest.xml:6:5-66
 14-->/Users/cspeed/Desktop/event_app/android/app/src/debug/AndroidManifest.xml:6:22-64
-15    <!-- Include required permissions for Google Maps API to run. -->
+15    <uses-permission android:name="android.permission.CAMERA" /> <!-- Include required permissions for Google Maps API to run. -->
+15-->[:barcode_scan] /Users/cspeed/Desktop/event_app/build/barcode_scan/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-65
+15-->[:barcode_scan] /Users/cspeed/Desktop/event_app/build/barcode_scan/intermediates/library_manifest/debug/AndroidManifest.xml:11:22-62
 16    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 16-->[com.google.android.gms:play-services-maps:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/6b9b7fc1ad481537ed0a66d62976ec46/play-services-maps-17.0.0/AndroidManifest.xml:23:5-79
 16-->[com.google.android.gms:play-services-maps:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/6b9b7fc1ad481537ed0a66d62976ec46/play-services-maps-17.0.0/AndroidManifest.xml:23:22-76
@@ -37,7 +39,7 @@
 29        android:name="io.flutter.app.FlutterApplication"
 29-->/Users/cspeed/Desktop/event_app/android/app/src/main/AndroidManifest.xml:9:9-57
 30        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-30-->[androidx.core:core:1.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/0a271e99b6771ad4a84318244d532fb7/core-1.0.0/AndroidManifest.xml:22:18-86
+30-->[androidx.core:core:1.0.1] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/a6b3cea9d5982f96644e4f92725f7c69/core-1.0.1/AndroidManifest.xml:22:18-86
 31        android:debuggable="true"
 32        android:icon="@mipmap/ic_launcher"
 32-->/Users/cspeed/Desktop/event_app/android/app/src/main/AndroidManifest.xml:11:9-43
@@ -92,30 +94,33 @@
 60-->[:url_launcher] /Users/cspeed/Desktop/event_app/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-74
 61            android:exported="false"
 61-->[:url_launcher] /Users/cspeed/Desktop/event_app/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:10:13-37
-62            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" /> <!-- Needs to be explicitly declared on P+ -->
+62            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 62-->[:url_launcher] /Users/cspeed/Desktop/event_app/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-71
-63        <uses-library
-63-->[com.google.android.gms:play-services-maps:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/6b9b7fc1ad481537ed0a66d62976ec46/play-services-maps-17.0.0/AndroidManifest.xml:33:9-35:40
-64            android:name="org.apache.http.legacy"
-64-->[com.google.android.gms:play-services-maps:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/6b9b7fc1ad481537ed0a66d62976ec46/play-services-maps-17.0.0/AndroidManifest.xml:34:13-50
-65            android:required="false" />
-65-->[com.google.android.gms:play-services-maps:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/6b9b7fc1ad481537ed0a66d62976ec46/play-services-maps-17.0.0/AndroidManifest.xml:35:13-37
-66
-67        <activity
-67-->[com.google.android.gms:play-services-base:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
-68            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-68-->[com.google.android.gms:play-services-base:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/AndroidManifest.xml:24:13-79
-69            android:exported="false"
-69-->[com.google.android.gms:play-services-base:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/AndroidManifest.xml:25:13-37
-70            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-70-->[com.google.android.gms:play-services-base:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/AndroidManifest.xml:26:13-72
-71
-72        <meta-data
-72-->[com.google.android.gms:play-services-basement:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/5e787f2bb88cd398f93a1754476b8368/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
-73            android:name="com.google.android.gms.version"
-73-->[com.google.android.gms:play-services-basement:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/5e787f2bb88cd398f93a1754476b8368/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
-74            android:value="@integer/google_play_services_version" />
-74-->[com.google.android.gms:play-services-basement:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/5e787f2bb88cd398f93a1754476b8368/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
-75    </application>
-76
-77</manifest>
+63        <activity android:name="de.mintware.barcode_scan.BarcodeScannerActivity" /> <!-- Needs to be explicitly declared on P+ -->
+63-->[:barcode_scan] /Users/cspeed/Desktop/event_app/build/barcode_scan/intermediates/library_manifest/debug/AndroidManifest.xml:14:9-84
+63-->[:barcode_scan] /Users/cspeed/Desktop/event_app/build/barcode_scan/intermediates/library_manifest/debug/AndroidManifest.xml:14:19-81
+64        <uses-library
+64-->[com.google.android.gms:play-services-maps:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/6b9b7fc1ad481537ed0a66d62976ec46/play-services-maps-17.0.0/AndroidManifest.xml:33:9-35:40
+65            android:name="org.apache.http.legacy"
+65-->[com.google.android.gms:play-services-maps:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/6b9b7fc1ad481537ed0a66d62976ec46/play-services-maps-17.0.0/AndroidManifest.xml:34:13-50
+66            android:required="false" />
+66-->[com.google.android.gms:play-services-maps:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/6b9b7fc1ad481537ed0a66d62976ec46/play-services-maps-17.0.0/AndroidManifest.xml:35:13-37
+67
+68        <activity
+68-->[com.google.android.gms:play-services-base:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
+69            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+69-->[com.google.android.gms:play-services-base:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/AndroidManifest.xml:24:13-79
+70            android:exported="false"
+70-->[com.google.android.gms:play-services-base:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/AndroidManifest.xml:25:13-37
+71            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+71-->[com.google.android.gms:play-services-base:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/AndroidManifest.xml:26:13-72
+72
+73        <meta-data
+73-->[com.google.android.gms:play-services-basement:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/5e787f2bb88cd398f93a1754476b8368/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
+74            android:name="com.google.android.gms.version"
+74-->[com.google.android.gms:play-services-basement:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/5e787f2bb88cd398f93a1754476b8368/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
+75            android:value="@integer/google_play_services_version" />
+75-->[com.google.android.gms:play-services-basement:17.0.0] /Users/cspeed/.gradle/caches/transforms-2/files-2.1/5e787f2bb88cd398f93a1754476b8368/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
+76    </application>
+77
+78</manifest>
