@@ -18,7 +18,7 @@ class Auth with ChangeNotifier {
 
   DateTime _expiryDate;
 
-  static String _apiBaseUrl = 'http://192.168.0.199:8000';
+  static String _apiBaseUrl = 'http://192.168.68.140:8000';
 
   bool get isAuth {
     return token != null;
@@ -39,15 +39,15 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> login(String email, String password) async {
-    print('login functino');
-    // var url = '$_apiBaseUrl/api/login?email=$email&password=$password';
+    // print('login functino');
+    var url = '$_apiBaseUrl/api/login?email=$email&password=$password';
 
-    // try {
-    //   final response = await http.get(url, headers: {"Content-type": 'application/json'});
+    try {
+      final response = await http.get(url, headers: {"Content-type": 'application/json'});
 
-    //   print({response.body});
-    // } catch (err) {
-    //   throw err;
-    // }
+      print({response.body});
+    } catch (err) {
+      throw err;
+    }
   }
 }

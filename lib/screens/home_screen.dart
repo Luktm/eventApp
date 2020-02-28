@@ -116,20 +116,20 @@ class _HomeScreen extends State<HomeScreen> {
                 ),
                 items: [
                   BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.home),
-                    title: Text('adf'),
+                    icon: Icon(CupertinoIcons.location),
+                    title: Text('Location'),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.profile_circled),
-                    title: Text('adf'),
+                    icon: Icon(CupertinoIcons.news),
+                    title: Text('Programme'),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.profile_circled),
-                    title: Text('adf'),
+                    icon: Icon(CupertinoIcons.bookmark),
+                    title: Text('Lucky Draw'),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.profile_circled),
-                    title: Text('adf'),
+                    icon: Icon(CupertinoIcons.person),
+                    title: Text('Profile'),
                   ),
                 ],
               ),
@@ -206,7 +206,6 @@ class _HomeScreen extends State<HomeScreen> {
               ),
             ),
         bottomNavBar: PlatformNavBar(),
-        
         // backgroundColor: backgroundColor,
         // appBar: platformAppBar(),
         // body: SafeAreaWidget(

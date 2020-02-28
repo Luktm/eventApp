@@ -74,194 +74,197 @@ class _LocationScreen extends State<LocationScreen> {
     // final String formattedDate = DateFormat('yyyy MMM dd').format(now);
     // final int weekdayInt = now.weekday;
 
-    return  SingleChildScrollView(
-        child: CardWidget(
-          title: 'Venue & Even Detail',
-          children: <Widget>[
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Location Map',
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: HexColor.accentColor,
-                ),
+    return SingleChildScrollView(
+      child: CardWidget(
+        title: 'Venue & Even Detail',
+        children: <Widget>[
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Location Map',
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontSize: 12,
+                color: HexColor.accentColor,
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              // width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            // width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
               ),
-              height: 130,
-              child: Stack(
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: GoogleMap(
-                      rotateGesturesEnabled: false,
-                      scrollGesturesEnabled: false,
-                      tiltGesturesEnabled: false,
-                      buildingsEnabled: false,
-                      gestureRecognizers: Set()
-                        ..add(Factory<PanGestureRecognizer>(
-                            () => PanGestureRecognizer()))
-                        ..add(Factory<ScaleGestureRecognizer>(
-                            () => ScaleGestureRecognizer()))
-                        ..add(Factory<TapGestureRecognizer>(
-                            () => TapGestureRecognizer()))
-                        ..add(Factory<VerticalDragGestureRecognizer>(
-                            () => VerticalDragGestureRecognizer())),
-                      compassEnabled: false,
-                      zoomGesturesEnabled: false,
-                      mapType: MapType.normal,
-                      myLocationEnabled: true,
-                      mapToolbarEnabled: false,
-                      myLocationButtonEnabled: false,
-                      onMapCreated: _onMapCreated,
-                      markers: {
-                        Marker(
-                          markerId: MarkerId(
-                            _lastMapPosition.toString(),
-                          ),
-                          position: _lastMapPosition,
-                          // infoWindow: InfoWindow(
-                          //     title: "Location Place",
-                          //     snippet: '5 star hotel'),
-                          icon: BitmapDescriptor.defaultMarker,
+            ),
+            height: 130,
+            child: Stack(
+              children: <Widget>[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: GoogleMap(
+                    rotateGesturesEnabled: false,
+                    scrollGesturesEnabled: false,
+                    tiltGesturesEnabled: false,
+                    buildingsEnabled: false,
+                    gestureRecognizers: Set()
+                      ..add(Factory<PanGestureRecognizer>(
+                          () => PanGestureRecognizer()))
+                      ..add(Factory<ScaleGestureRecognizer>(
+                          () => ScaleGestureRecognizer()))
+                      ..add(Factory<TapGestureRecognizer>(
+                          () => TapGestureRecognizer()))
+                      ..add(Factory<VerticalDragGestureRecognizer>(
+                          () => VerticalDragGestureRecognizer())),
+                    compassEnabled: false,
+                    zoomGesturesEnabled: false,
+                    mapType: MapType.normal,
+                    myLocationEnabled: true,
+                    mapToolbarEnabled: false,
+                    myLocationButtonEnabled: false,
+                    onMapCreated: _onMapCreated,
+                    markers: {
+                      Marker(
+                        markerId: MarkerId(
+                          _lastMapPosition.toString(),
                         ),
-                      },
-                      initialCameraPosition: CameraPosition(
-                        target: _center,
-                        zoom: 11.0,
+                        position: _lastMapPosition,
+                        // infoWindow: InfoWindow(
+                        //     title: "Location Place",
+                        //     snippet: '5 star hotel'),
+                        icon: BitmapDescriptor.defaultMarker,
                       ),
+                    },
+                    initialCameraPosition: CameraPosition(
+                      target: _center,
+                      zoom: 11.0,
                     ),
                   ),
-                  Positioned(
-                    bottom: 0,
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    child: Opacity(
-                      opacity: 0,
-                      child: RaisedButton(
-                        color: Colors.transparent,
-                        disabledColor: Colors.transparent,
-                        onPressed: () => MapsLauncher.launchCoordinates(
-                            _initCenter.latitude, _initCenter.longitude),
-                        // child: Text('abc'),
-                      ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: Opacity(
+                    opacity: 0,
+                    child: RaisedButton(
+                      color: Colors.transparent,
+                      disabledColor: Colors.transparent,
+                      onPressed: () => MapsLauncher.launchCoordinates(
+                          _initCenter.latitude, _initCenter.longitude),
+                      // child: Text('abc'),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Table(
+            // border: TableBorder.all(),
+            // defaultColumnWidth: FlexColumnWidth(0.3),
+            columnWidths: {
+              0: FractionColumnWidth(.3),
+              // 1: FractionColumnWidth(.1)
+            },
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+            children: [
+              TableRow(
+                children: [
+                  Text(
+                    'Venue',
+                    style: TextStyle(color: HexColor.greyColor),
+                  ),
+                  Text(
+                    'Hillton Kuala Lumpur Dining',
+                    style: TextStyle(
+                      color: HexColor.accentColor,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
               ),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Table(
-              // border: TableBorder.all(),
-              // defaultColumnWidth: FlexColumnWidth(0.3),
-              columnWidths: {
-                0: FractionColumnWidth(.3),
-                // 1: FractionColumnWidth(.1)
-              },
-              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              children: [
-                TableRow(
-                  children: [
-                    Text(
-                      'Venue',
-                      style: TextStyle(color: HexColor.greyColor),
-                    ),
-                    Text(
-                      'Hillton Kuala Lumpur Dining',
-                      style: TextStyle(
-                        color: HexColor.accentColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    SizedBox(
-                      height: tableRowSizedBoxHeight,
-                    ),
-                    SizedBox(
-                      height: tableRowSizedBoxHeight,
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Date ',
-                      style: TextStyle(color: HexColor.greyColor),
-                    ),
-                    Text(
-                      '${Date.formattedDate} (${Date.weekday()})',
-                      style: TextStyle(
-                        color: HexColor.accentColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    SizedBox(
-                      height: tableRowSizedBoxHeight,
-                    ),
-                    SizedBox(
-                      height: tableRowSizedBoxHeight,
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Time',
-                      style: TextStyle(color: HexColor.greyColor),
-                    ),
-                    Text(
-                      '7pm-9pm ',
-                      style: TextStyle(
-                        color: HexColor.accentColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ButtonTheme(
-              minWidth: 200.0,
-              child: RaisedButton(
-                child: Text(
-                  'Open Map',
-                  style: TextStyle(
-                    color: Colors.white,
+              TableRow(
+                children: [
+                  SizedBox(
+                    height: tableRowSizedBoxHeight,
                   ),
+                  SizedBox(
+                    height: tableRowSizedBoxHeight,
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Text(
+                    'Date ',
+                    style: TextStyle(color: HexColor.greyColor),
+                  ),
+                  Text(
+                    '${Date.formattedDate} (${Date.weekday()})',
+                    style: TextStyle(
+                      color: HexColor.accentColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  SizedBox(
+                    height: tableRowSizedBoxHeight,
+                  ),
+                  SizedBox(
+                    height: tableRowSizedBoxHeight,
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Text(
+                    'Time',
+                    style: TextStyle(color: HexColor.greyColor),
+                  ),
+                  Text(
+                    '7pm-9pm ',
+                    style: TextStyle(
+                      color: HexColor.accentColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          ButtonTheme(
+            minWidth: 200.0,
+            child: RaisedButton(
+              child: Text(
+                'Open Map',
+                style: TextStyle(
+                  color: Colors.white,
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                color: Theme.of(context).primaryColor,
-                onPressed: () {},
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              color: Theme.of(context).primaryColor,
+              onPressed: () => MapsLauncher.launchCoordinates(
+                _initCenter.latitude,
+                _initCenter.longitude,
               ),
             ),
-          ],
-        ),
-      );
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
           theme: cupertinoTheme,
           color: primaryColor,
         ),
-        home: LoginScreen(),
+        home: HomeScreen(),
         routes: {
           QRFullScreen.routeName: (ctx) => QRFullScreen(),
           NotificationScreen.routeName: (ctx) => NotificationScreen(),

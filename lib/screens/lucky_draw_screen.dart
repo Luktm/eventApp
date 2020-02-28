@@ -67,115 +67,115 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
             SizedBox(
               height: 10,
             ),
-            Container(
-              // color: Colors.red,
-              height: 30,
-              width: double.infinity,
-              child: ListView(
-                addAutomaticKeepAlives: true,
-                cacheExtent: 10,
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.center,
-                    // width: 100,
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Text(
-                      '1930',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    // width: 100,
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Text(
-                      '2094',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    // width: 100,
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Text(
-                      '2094',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    // width: 100,
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Text(
-                      '2094',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    // width: 100,
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Text(
-                      '2094',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   // color: Colors.red,
+            //   height: 30,
+            //   width: double.infinity,
+            //   child: ListView(
+            //     addAutomaticKeepAlives: true,
+            //     cacheExtent: 10,
+            //     scrollDirection: Axis.horizontal,
+            //     children: <Widget>[
+            //       Container(
+            //         alignment: Alignment.center,
+            //         // width: 100,
+            //         padding: EdgeInsets.symmetric(horizontal: 20),
+            //         decoration: BoxDecoration(
+            //             border: Border.all(
+            //               color: Theme.of(context).primaryColor,
+            //             ),
+            //             borderRadius: BorderRadius.circular(30)),
+            //         child: Text(
+            //           '1930',
+            //           textAlign: TextAlign.center,
+            //           style: TextStyle(
+            //             color: Theme.of(context).primaryColor,
+            //           ),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         width: 10,
+            //       ),
+            //       Container(
+            //         alignment: Alignment.center,
+            //         // width: 100,
+            //         padding: EdgeInsets.symmetric(horizontal: 20),
+            //         decoration: BoxDecoration(
+            //             border: Border.all(
+            //               color: Theme.of(context).primaryColor,
+            //             ),
+            //             borderRadius: BorderRadius.circular(30)),
+            //         child: Text(
+            //           '2094',
+            //           textAlign: TextAlign.center,
+            //           style: TextStyle(
+            //             color: Theme.of(context).primaryColor,
+            //           ),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         width: 10,
+            //       ),
+            //       Container(
+            //         alignment: Alignment.center,
+            //         // width: 100,
+            //         padding: EdgeInsets.symmetric(horizontal: 20),
+            //         decoration: BoxDecoration(
+            //             border: Border.all(
+            //               color: Theme.of(context).primaryColor,
+            //             ),
+            //             borderRadius: BorderRadius.circular(30)),
+            //         child: Text(
+            //           '2094',
+            //           textAlign: TextAlign.center,
+            //           style: TextStyle(
+            //             color: Theme.of(context).primaryColor,
+            //           ),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         width: 10,
+            //       ),
+            //       Container(
+            //         alignment: Alignment.center,
+            //         // width: 100,
+            //         padding: EdgeInsets.symmetric(horizontal: 20),
+            //         decoration: BoxDecoration(
+            //             border: Border.all(
+            //               color: Theme.of(context).primaryColor,
+            //             ),
+            //             borderRadius: BorderRadius.circular(30)),
+            //         child: Text(
+            //           '2094',
+            //           textAlign: TextAlign.center,
+            //           style: TextStyle(
+            //             color: Theme.of(context).primaryColor,
+            //           ),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         width: 10,
+            //       ),
+            //       Container(
+            //         alignment: Alignment.center,
+            //         // width: 100,
+            //         padding: EdgeInsets.symmetric(horizontal: 20),
+            //         decoration: BoxDecoration(
+            //             border: Border.all(
+            //               color: Theme.of(context).primaryColor,
+            //             ),
+            //             borderRadius: BorderRadius.circular(30)),
+            //         child: Text(
+            //           '2094',
+            //           textAlign: TextAlign.center,
+            //           style: TextStyle(
+            //             color: Theme.of(context).primaryColor,
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             SizedBox(
               height: 20,
             ),
@@ -362,7 +362,7 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
               height: 30,
             ),
             Text(
-              'Insert Lucky Draw Number',
+              'Your Lucky Draw Number',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 15,
@@ -377,7 +377,7 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
                 horizontal: 40,
               ),
               child: Text(
-                'Please insert your favorite lucky draw number, once the number you submit, i can’t be change anymore',
+                'This is your lucky draw number, your lucky draw number will show on the stage to get the gift.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: HexColor.accentColor,
@@ -388,18 +388,18 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
             SizedBox(
               height: 20,
             ),
-            RaisedButton(
-              padding: EdgeInsets.symmetric(horizontal: 50),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {},
-              child: Text(
-                'Submit',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+            // RaisedButton(
+            //   padding: EdgeInsets.symmetric(horizontal: 50),
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(30),
+            //   ),
+            //   color: Theme.of(context).primaryColor,
+            //   onPressed: () {},
+            //   child: Text(
+            //     'Submit',
+            //     style: TextStyle(color: Colors.white),
+            //   ),
+            // ),
           ],
         ),
       );

@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:fluttertoast/fluttertoast.dart';
+
 import '../providers/auth.dart';
 
 import '../widgets/logo_widget.dart';
@@ -19,7 +21,8 @@ class _AuthScreenState extends State<LoginScreen> {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final _passwordFocusNode = FocusNode();
+  FocusNode _passwordFocusNode = FocusNode();
+
   bool _eyeoff = true;
 
   var _isInit = true;
@@ -31,13 +34,20 @@ class _AuthScreenState extends State<LoginScreen> {
 
   @override
   void didChangeDependencies() {
-    if (_isInit) {
-      Provider.of<Auth>(context).login('email', 'password');
-    }
+    if (_isInit) {}
 
     _isInit = false;
 
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+
+    _passwordFocusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -154,9 +164,12 @@ class _AuthScreenState extends State<LoginScreen> {
                           ],
                         ),
                         child: PlatformTextField(
-                          // style: TextStyle(height: 1.7, fontSize: 20),
                           android: (_) => MaterialTextFieldData(
                             controller: emailController,
+                            onSubmitted: (_) {
+                              Focus.of(context)
+                                  .requestFocus(_passwordFocusNode);
+                            },
                             onChanged: (String text) {
                               setState(() {
                                 _authData['email'] = text;
@@ -169,17 +182,21 @@ class _AuthScreenState extends State<LoginScreen> {
                             ),
                           ),
                           ios: (_) => CupertinoTextFieldData(
-                              controller: emailController,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25.0),
-                                color: Colors.white,
-                              ),
-                              // style: TextStyle(height: 2.0, ),
-                              onChanged: (String text) {
-                                setState(() {
-                                  _authData['email'] = text;
-                                });
-                              }),
+                            onSubmitted: (_) {
+                              Focus.of(context).requestFocus(_passwordFocusNode);
+                            },
+                            controller: emailController,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25.0),
+                              color: Colors.white,
+                            ),
+                            // style: TextStyle(height: 2.0, ),
+                            onChanged: (String text) {
+                              setState(() {
+                                _authData['email'] = text;
+                              });
+                            },
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -216,6 +233,7 @@ class _AuthScreenState extends State<LoginScreen> {
                         child: PlatformTextField(
                           //  style: TextStyle(height: 1.7, fontSize: 20),
                           android: (_) => MaterialTextFieldData(
+                            focusNode: _passwordFocusNode,
                             obscureText: true,
                             onChanged: (String text) {
                               setState(() {
@@ -229,6 +247,7 @@ class _AuthScreenState extends State<LoginScreen> {
                             ),
                           ),
                           ios: (_) => CupertinoTextFieldData(
+                              focusNode: _passwordFocusNode,
                               obscureText: true,
                               controller: passwordController,
                               decoration: BoxDecoration(
@@ -250,11 +269,34 @@ class _AuthScreenState extends State<LoginScreen> {
                         minWidth: deviceData.width,
                         height: 45.0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0),
+                          borderRadius: BorderRadius.circular(30.0),
                         ),
                         child: RaisedButton(
                           color: ThemeData.light().primaryColor,
-                          onPressed: null,
+                          onPressed: () {
+                            if (!_authData['email'].contains('@')) {
+                              return Fluttertoast.showToast(
+                                msg: "Please insert Valid Email",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.TOP,
+                                timeInSecForIos: 1,
+                                // backgroundColor: Colors.red,
+                                // textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
+                            } else if (_authData['password'].length < 3) {
+                             return  Fluttertoast.showToast(
+                                msg: "Password must be more than 3 character",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.TOP,
+                                timeInSecForIos: 1,
+                                // backgroundColor: Colors.red,
+                                // textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
+                            }
+                            return Provider.of<Auth>(context, listen: false).login(_authData['email'], _authData['email']);
+                          },
                           child: Text(
                             "Login",
                             style: TextStyle(
