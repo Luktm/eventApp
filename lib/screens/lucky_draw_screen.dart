@@ -53,20 +53,20 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
         child: CardWidget(
           title: 'Lucky Draw',
           children: <Widget>[
-            SizedBox(
-              height: 20,
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Available Lucky Draw Number',
-                textAlign: TextAlign.left,
-                style: TextStyle(color: HexColor.accentColor, fontSize: 11),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // Align(
+              //   alignment: Alignment.centerLeft,
+              //   child: Text(
+              //     'Available Lucky Draw Number',
+              //     textAlign: TextAlign.center,
+              //     style: TextStyle(color: HexColor.accentColor, fontSize: 11),
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
             // Container(
             //   // color: Colors.red,
             //   height: 30,

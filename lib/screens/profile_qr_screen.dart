@@ -10,6 +10,7 @@ import 'dart:ui';
 import 'dart:io';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../helpers/custom_route.dart';
 import '../helpers/hex_color.dart';
@@ -189,26 +190,18 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
                     // mainAxisAlignment: MainAxisAlignment.center,
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Tap Enlarge',
-                        style: TextStyle(
-                          color: HexColor.greyColor,
-                          fontSize: 18,
-                        ),
-                      ),
                       GestureDetector(
                         onTap: () => Navigator.push(
                             context,
                             CustomRoute(
-                              builder: (ctx) => QRFullScreen(
-                                // qrData: _dataString,
-                                // tagName: tagName,
-                              ),
-                              settings: RouteSettings(arguments: {'tagName': tagName, 'qrData': _dataString})
-                            )
+                                builder: (ctx) => QRFullScreen(
+                                    // qrData: _dataString,
+                                    // tagName: tagName,
+                                    ),
+                                settings: RouteSettings(arguments: {
+                                  'tagName': tagName,
+                                  'qrData': _dataString
+                                }))
                             // platformPageRoute(
                             //   context: context,
                             //   builder: (BuildContext context) => QRFullScreen(
@@ -217,28 +210,42 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
                             //   ),
                             // ),
                             ),
-                        child: Hero(
-                          tag: Platform.isAndroid ? tagName : UniqueKey(),
-                          child: RepaintBoundary(
-                            key: globalKey,
-                            child: QrImage(
-                              data: _dataString,
-                              size: 0.2 * bodyHeight,
-                              errorStateBuilder:
-                                  (BuildContext context, Object obj) =>
-                                      AlertDialog(
-                                title: Text('Qr Errro Occur'),
-                                content: Text('Please try again'),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    child: Text('ok'),
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                  )
-                                ],
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Tap Enlarge',
+                              style: TextStyle(
+                                color: HexColor.greyColor,
+                                fontSize: 18,
                               ),
                             ),
-                          ),
+                            Hero(
+                              tag: Platform.isAndroid ? tagName : UniqueKey(),
+                              child: RepaintBoundary(
+                                key: globalKey,
+                                child: QrImage(
+                                  data: _dataString,
+                                  size: 0.2 * bodyHeight,
+                                  errorStateBuilder:
+                                      (BuildContext context, Object obj) =>
+                                          AlertDialog(
+                                    title: Text('Qr Errro Occur'),
+                                    content: Text('Please try again'),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: Text('ok'),
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
@@ -254,11 +261,29 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
                         ),
                         height: 30,
                         child: OverflowBox(
-                          child: Text(
-                            "uncheck-in".toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.red,
+                          child: GestureDetector(
+                            onTap: () {
+                              Fluttertoast.showToast(
+                                  msg: "Please show your qr code for attendance",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.TOP,
+                                  fontSize: 16.0);
+
+                              // final snackbar = SnackBar(
+                              //   content: Text(
+                              //     'Please show your barcode to make attendance',
+                              //   ),
+                              //   duration: Duration(milliseconds: 1000),
+                              // );
+
+                              // Scaffold.of(context).showSnackBar(snackbar);
+                            },
+                            child: Text(
+                              "uncheck-in".toUpperCase(),
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.red,
+                              ),
                             ),
                           ),
                         ),
@@ -282,7 +307,7 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
                   alignment: Alignment.centerLeft,
                   child: Column(
                     children: <Widget>[
-                      personalInfo('ID', '12345'),
+                      personalInfo('ID', '6'),
                       SizedBox(
                         height: 20,
                       ),
@@ -290,11 +315,11 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
                       SizedBox(
                         height: 20,
                       ),
-                      personalInfo('Table No', '30'),
+                      personalInfo('Table No', '1'),
                       SizedBox(
                         height: 20,
                       ),
-                      personalInfo('Full Name', 'John Doe')
+                      personalInfo('Full Name', 'Johann')
                     ],
                   ),
                 ),

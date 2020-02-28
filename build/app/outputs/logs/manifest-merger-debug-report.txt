@@ -5,6 +5,7 @@ INJECTED from /Users/cspeed/Desktop/event_app/android/app/src/main/AndroidManife
 INJECTED from /Users/cspeed/Desktop/event_app/android/app/src/main/AndroidManifest.xml:1:1-32:12
 INJECTED from /Users/cspeed/Desktop/event_app/android/app/src/main/AndroidManifest.xml:1:1-32:12
 MERGED from /Users/cspeed/Desktop/event_app/android/app/src/main/AndroidManifest.xml:1:1-32:12
+MERGED from [:fluttertoast] /Users/cspeed/Desktop/event_app/build/fluttertoast/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:sqflite] /Users/cspeed/Desktop/event_app/build/sqflite/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:google_maps_flutter] /Users/cspeed/Desktop/event_app/build/google_maps_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_plugin_android_lifecycle] /Users/cspeed/Desktop/event_app/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
@@ -143,6 +144,8 @@ uses-sdk
 INJECTED from /Users/cspeed/Desktop/event_app/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/cspeed/Desktop/event_app/android/app/src/main/AndroidManifest.xml
 INJECTED from /Users/cspeed/Desktop/event_app/android/app/src/main/AndroidManifest.xml
+MERGED from [:fluttertoast] /Users/cspeed/Desktop/event_app/build/fluttertoast/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:fluttertoast] /Users/cspeed/Desktop/event_app/build/fluttertoast/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:sqflite] /Users/cspeed/Desktop/event_app/build/sqflite/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:sqflite] /Users/cspeed/Desktop/event_app/build/sqflite/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:google_maps_flutter] /Users/cspeed/Desktop/event_app/build/google_maps_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44

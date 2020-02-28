@@ -273,7 +273,8 @@ class _AuthScreenState extends State<LoginScreen> {
                         ),
                         child: RaisedButton(
                           color: ThemeData.light().primaryColor,
-                          onPressed: () {
+                          onPressed: () async{
+                            
                             if (!_authData['email'].contains('@')) {
                               return Fluttertoast.showToast(
                                 msg: "Please insert Valid Email",
@@ -295,7 +296,16 @@ class _AuthScreenState extends State<LoginScreen> {
                                 fontSize: 16.0,
                               );
                             }
-                            return Provider.of<Auth>(context, listen: false).login(_authData['email'], _authData['email']);
+
+
+                            try {
+                              
+                            }catch(err) {
+
+                            }
+                          
+                            
+                            return Provider.of<Auth>(context, listen: false).login(_authData['email'], _authData['password']);
                           },
                           child: Text(
                             "Login",
