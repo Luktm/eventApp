@@ -14,7 +14,7 @@ class CustomRoute<T> extends MaterialPageRoute<T> {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    if (settings.isInitialRoute) {
+    if (settings.arguments) {
       return child;
     }
 
@@ -42,7 +42,7 @@ class CustomPageTransitionBuilder extends PageTransitionsBuilder {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    if (route.settings.isInitialRoute) {
+    if (route.settings.arguments) {
       return child;
     }
 

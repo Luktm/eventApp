@@ -20,6 +20,8 @@ class Auth with ChangeNotifier {
   Timer _authTimer;
   DateTime _expiryDate;
 
+  bool _firstTimeLogin = true;
+
   static String _apiBaseUrl = 'http://192.168.68.140:8000';
 
   bool get isAuth {
@@ -59,6 +61,10 @@ class Auth with ChangeNotifier {
     return _table;
   }
 
+  Future get firstTimeLogin   async{
+    return _firstTimeLogin;
+  }
+
   // String get name {
   //   return _u
   // }
@@ -77,6 +83,7 @@ class Auth with ChangeNotifier {
         throw (responseData['message']);
       }
 
+
       _status = responseData['status'];
       _message = responseData['message'];
       _id = responseData['id'];
@@ -88,9 +95,13 @@ class Auth with ChangeNotifier {
 
       // _expiryDate = DateTime.now().add(Duration(seconds: int.parse(responseData['expiresIn'])));
 
-      notifyListeners();
-
       final prefs = await SharedPreferences.getInstance();
+
+      if(prefs.containsKey('firstTimeLogin') && !prefs.getBool('firstTimeLogin')) {
+        _firstTimeLogin = false;
+      }
+
+      notifyListeners();
 
       final userData = json.encode(
         {

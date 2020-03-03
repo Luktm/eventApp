@@ -240,8 +240,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       style: TextStyle(color: Colors.white),
                     ),
                     color: ThemeData.light().primaryColor,
-                    onPressed: () {
-                      print('bc');
+                    onPressed: () async{
+                      final prefs  = await SharedPreferences.getInstance();
+
+                        prefs.setBool('firstTimeLogin', false);
                     },
                   )
                 ],

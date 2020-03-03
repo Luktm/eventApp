@@ -30,8 +30,8 @@ class _LoginScreen extends State<LoginScreen> {
   var _isInit = true;
 
   Map<String, String> _authData = {
-    'email': 'johann@gmail.com',
-    'password': '123',
+    'email': '',
+    'password': '',
   };
 
   @override
@@ -55,7 +55,7 @@ class _LoginScreen extends State<LoginScreen> {
     showPlatformDialog(
       context: context,
       builder: (ctx) => PlatformAlertDialog(
-        title: Text('An error occured'),
+        title: Text('Warning'),
         content: Text(
           message.toString(),
         ),
@@ -297,7 +297,13 @@ class _LoginScreen extends State<LoginScreen> {
                           child: RaisedButton(
                             color: ThemeData.light().primaryColor,
                             onPressed: () async {
-                              if (!_authData['email'].contains('@')) {
+                              if (_authData['email'].isEmpty) {
+                                return showDialogMessage(
+                                    context, 'Email must be fill');
+                              } else if (_authData['password'].isEmpty) {
+                                return showDialogMessage(
+                                    context, 'Password must be given');
+                              } else if (!_authData['email'].contains('@')) {
                                 return showDialogMessage(
                                     context, 'Please insert Valid Email');
 

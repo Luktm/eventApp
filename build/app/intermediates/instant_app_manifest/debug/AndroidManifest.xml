@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.event_app"
+    package="com.cspeed.event_app"
     android:targetSandboxVersion="2"
     android:versionCode="1"
     android:versionName="1.0.0" >
@@ -19,25 +19,19 @@
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
-    <!--
- io.flutter.app.FlutterApplication is an android.app.Application that
-         calls FlutterMain.startInitialization(this); in its onCreate method.
-         In most cases you can leave this as-is, but you if you want to provide
-         additional functionality it is fine to subclass or reimplement
-         FlutterApplication and put your custom class here.
-    -->
+
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="event_app" >
+        android:label="Night of Hope Healing" >
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyABmg-b5Hf977RIXt2sXbFNEK8O6Jj4bgc" />
 
         <activity
-            android:name="com.example.event_app.MainActivity"
+            android:name="com.cspeed.event_app.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"

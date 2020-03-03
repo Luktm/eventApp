@@ -1,4 +1,4 @@
-package com.example.event_app
+package com.cspeed.event_app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
