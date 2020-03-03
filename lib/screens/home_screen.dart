@@ -86,167 +86,192 @@ class _HomeScreen extends State<HomeScreen> {
     );
   }
 
+Future<bool> _exitApp(BuildContext context) {
+  return showDialog(
+        context: context,
+        child: new AlertDialog(
+          title: new Text('Do you want to exit this application?'),
+          content: new Text('We hate to see you leave...'),
+          actions: <Widget>[
+            new FlatButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: new Text('No'),
+            ),
+            new FlatButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: new Text('Yes'),
+            ),
+          ],
+        ),
+      ) ??
+      false;
+}
+
   @override
   Widget build(BuildContext context) {
     var deviceData = MediaQuery.of(context);
 
-    return PlatformScaffold(
-        // key: _globalKey,
-        ios: (_) => CupertinoPageScaffoldData(
-              navigationBar: CupertinoNavigationBar(
-                transitionBetweenRoutes: false,
-                heroTag: UniqueKey(),
-                middle: Text(_title[_currentIndex]),
-                trailing: CupertinoButton(
-                        onPressed: () => Navigator.pushNamed(
-                            context, NotificationScreen.routeName),
-                        child: Icon(
-                          CupertinoIcons.bell,
-                        ),
-                      )
-                    ,
-              ),
-              controller: _cupertinoTabController,
-              bottomTabBar: CupertinoTabBar(
-                currentIndex: _currentIndex,
-                onTap: (index) => setState(
-                  () {
-                    _currentIndex = index;
-                  },
+    return WillPopScope(
+        onWillPop: () => _exitApp(context),
+          child: PlatformScaffold(
+          key: _globalKey,
+          ios: (_) => CupertinoPageScaffoldData(
+                navigationBar: CupertinoNavigationBar(
+                  previousPageTitle: 'home',
+                  transitionBetweenRoutes: false,
+                  heroTag: UniqueKey(),
+                  middle: Text(_title[_currentIndex]),
+                  trailing: CupertinoButton(
+                          onPressed: () => Navigator.pushNamed(
+                              context, NotificationScreen.routeName),
+                          child: Icon(
+                            CupertinoIcons.bell,
+                          ),
+                        )
+                      ,
                 ),
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.location),
-                    title: Text('Location'),
+                controller: _cupertinoTabController,
+                bottomTabBar: CupertinoTabBar(
+                  currentIndex: _currentIndex,
+                  onTap: (index) => setState(
+                    () {
+                      _currentIndex = index;
+                    },
                   ),
-                  BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.news),
-                    title: Text('Programme'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.bookmark),
-                    title: Text('Lucky Draw'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.person),
-                    title: Text('Profile'),
-                  ),
-                ],
-              ),
-              body: SafeAreaWidget(
-                child: SafeAreaWidget(
-                  child: Container(
-                    constraints: BoxConstraints(
-                      minHeight: deviceData.size.height,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(CupertinoIcons.location),
+                      title: Text('Location'),
                     ),
+                    BottomNavigationBarItem(
+                      icon: Icon(CupertinoIcons.news),
+                      title: Text('Programme'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(CupertinoIcons.bookmark),
+                      title: Text('Lucky Draw'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(CupertinoIcons.person),
+                      title: Text('Profile'),
+                    ),
+                  ],
+                ),
+                body: SafeAreaWidget(
+                  child: SafeAreaWidget(
+                    child: Container(
+                      constraints: BoxConstraints(
+                        minHeight: deviceData.size.height,
+                      ),
+                      color: backgroundColor,
+                      // child: widget.bodyChild,
+                      child: _children[_currentIndex],
+                    ),
+                  ),
+                ),
+              ),
+          android: (_) => MaterialScaffoldData(
+                appBar: AppBar(
+                  centerTitle: true,
+                  title: Text(
+                    _title[_currentIndex],
+                  ),
+                  actions: _currentIndex == 0
+                      ? [
+                          IconButton(
+                            onPressed: () => Navigator.of(context)
+                                .pushNamed(NotificationScreen.routeName),
+                            icon: Icon(
+                              Icons.notifications_none,
+                            ),
+                          ),
+                        ]
+                      : null,
+                ),
+                body: SafeAreaWidget(
+                  child: Container(
                     color: backgroundColor,
                     // child: widget.bodyChild,
                     child: _children[_currentIndex],
                   ),
                 ),
-              ),
-            ),
-        android: (_) => MaterialScaffoldData(
-              appBar: AppBar(
-                centerTitle: true,
-                title: Text(
-                  _title[_currentIndex],
+                bottomNavBar: BottomNavigationBar(
+                  currentIndex: _currentIndex,
+                  onTap: (int index) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.location_on,
+                      ),
+                      title: Text('Location'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.list),
+                      title: Text('List'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.local_activity,
+                      ),
+                      title: Text('Lucky Draw'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.person,
+                      ),
+                      title: Text('Profile'),
+                    ),
+                  ],
+                  type: BottomNavigationBarType.fixed,
                 ),
-                actions: _currentIndex == 0
-                    ? [
-                        IconButton(
-                          onPressed: () => Navigator.of(context)
-                              .pushNamed(NotificationScreen.routeName),
-                          icon: Icon(
-                            Icons.notifications_none,
-                          ),
-                        ),
-                      ]
-                    : null,
               ),
-              body: SafeAreaWidget(
-                child: Container(
-                  color: backgroundColor,
-                  // child: widget.bodyChild,
-                  child: _children[_currentIndex],
-                ),
-              ),
-              bottomNavBar: BottomNavigationBar(
-                currentIndex: _currentIndex,
-                onTap: (int index) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.location_on,
-                    ),
-                    title: Text('Location'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.list),
-                    title: Text('List'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.local_activity,
-                    ),
-                    title: Text('Lucky Draw'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.person,
-                    ),
-                    title: Text('Profile'),
-                  ),
-                ],
-                type: BottomNavigationBarType.fixed,
-              ),
-            ),
-        bottomNavBar: PlatformNavBar(),
-        // backgroundColor: backgroundColor,
-        // appBar: platformAppBar(),
-        // body: SafeAreaWidget(
-        //   child: Container(
-        //     color: backgroundColor,
-        //     // child: widget.bodyChild,
-        //     child: _children[_currentIndex],
-        //   ),
-        // ),
-        // bottomNavBar: PlatformNavBar(
-        //   currentIndex: _currentIndex,
-        //   itemChanged: (index) => setState(() {
-        //     _currentIndex = index;
-        //   }),
-        //   items: [
-        //     BottomNavigationBarItem(
-        //       icon: Icon(
-        //         Icons.location_on,
-        //       ),
-        //       title: Text('Location'),
-        //     ),
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.list),
-        //       title: Text('List'),
-        //     ),
-        //     BottomNavigationBarItem(
-        //       icon: Icon(
-        //         Icons.local_activity,
-        //       ),
-        //       title: Text('Lucky Draw'),
-        //     ),
-        //     BottomNavigationBarItem(
-        //       icon: Icon(
-        //         Icons.person,
-        //       ),
-        //       title: Text('Profile'),
-        //     ),
-        //   ],
-        // ),
-        // iosContentPadding: false,
-        // iosContentBottomPadding: false,
-        );
+          bottomNavBar: PlatformNavBar(),
+          // backgroundColor: backgroundColor,
+          // appBar: platformAppBar(),
+          // body: SafeAreaWidget(
+          //   child: Container(
+          //     color: backgroundColor,
+          //     // child: widget.bodyChild,
+          //     child: _children[_currentIndex],
+          //   ),
+          // ),
+          // bottomNavBar: PlatformNavBar(
+          //   currentIndex: _currentIndex,
+          //   itemChanged: (index) => setState(() {
+          //     _currentIndex = index;
+          //   }),
+          //   items: [
+          //     BottomNavigationBarItem(
+          //       icon: Icon(
+          //         Icons.location_on,
+          //       ),
+          //       title: Text('Location'),
+          //     ),
+          //     BottomNavigationBarItem(
+          //       icon: Icon(Icons.list),
+          //       title: Text('List'),
+          //     ),
+          //     BottomNavigationBarItem(
+          //       icon: Icon(
+          //         Icons.local_activity,
+          //       ),
+          //       title: Text('Lucky Draw'),
+          //     ),
+          //     BottomNavigationBarItem(
+          //       icon: Icon(
+          //         Icons.person,
+          //       ),
+          //       title: Text('Profile'),
+          //     ),
+          //   ],
+          // ),
+          // iosContentPadding: false,
+          // iosContentBottomPadding: false,
+          ),
+    );
   }
 }

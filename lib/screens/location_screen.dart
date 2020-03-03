@@ -23,12 +23,12 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreen extends State<LocationScreen> {
   Completer<GoogleMapController> _controller = Completer();
 
-  static final LatLng _initCenter = LatLng(45.521563, -122.677433);
+  static final LatLng _initCenter = LatLng(3.1354, 101.6857);
 
   LatLng _lastMapPosition = _initCenter;
 
   static final LatLng _center =
-      LatLng(_initCenter.latitude + 0.011500, _initCenter.longitude);
+      LatLng(_initCenter.latitude + 0.000500, _initCenter.longitude);
 
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
@@ -139,7 +139,7 @@ class _LocationScreen extends State<LocationScreen> {
                     },
                     initialCameraPosition: CameraPosition(
                       target: _center,
-                      zoom: 11.0,
+                      zoom: 15.0,
                     ),
                   ),
                 ),

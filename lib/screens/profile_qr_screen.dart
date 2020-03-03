@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
@@ -16,8 +17,14 @@ import '../helpers/custom_route.dart';
 import '../helpers/hex_color.dart';
 
 import './qr_full_screen.dart';
+import '../screens/login_screen.dart';
+import '../main.dart';
+
+import '../providers/auth.dart';
 
 class ProfileQRScreen extends StatefulWidget {
+  static const routeName = '/profile-qr-screen';
+
   @override
   _ProfileQRScreenState createState() => _ProfileQRScreenState();
 }
@@ -145,7 +152,7 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
   @override
   Widget build(BuildContext context) {
     var deviceData = MediaQuery.of(context);
-
+    final auth = Provider.of<Auth>(context, listen: false);
     // const double _topSectionTopPadding = 50.0;
     // const double _topSectionBottomPadding = 20.0;
     // const double _topSectionHeight = 50.0;
@@ -192,24 +199,54 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
                     children: <Widget>[
                       GestureDetector(
                         onTap: () => Navigator.push(
-                            context,
-                            CustomRoute(
-                                builder: (ctx) => QRFullScreen(
-                                    // qrData: _dataString,
-                                    // tagName: tagName,
-                                    ),
-                                settings: RouteSettings(arguments: {
-                                  'tagName': tagName,
-                                  'qrData': _dataString
-                                }))
-                            // platformPageRoute(
-                            //   context: context,
-                            //   builder: (BuildContext context) => QRFullScreen(
-                            //     tagName: tagName,
-                            //     qrData: _dataString,
-                            //   ),
-                            // ),
+                          context,
+                          CustomRoute(
+                            builder: (ctx) => QRFullScreen(
+                                // qrData: _dataString,
+                                // tagName: tagName,
+                                ),
+                            settings: RouteSettings(
+                              arguments: {
+                                'tagName': tagName,
+                                'qrData': _dataString
+                              },
                             ),
+                          ),
+                          // platformPageRoute(
+                          //   context: context,
+                          //   builder: (BuildContext context) => QRFullScreen(
+                          //     tagName: tagName,
+                          //     qrData: _dataString,
+                          //   ),
+                          // ),
+                        ),
+
+                        // onTap: () {
+                        //   showPlatformDialog(
+                        //     context: context,
+                        //     builder: (_) => PlatformAlertDialog(
+                        //       content: Container(
+                        //         decoration: BoxDecoration(color: Colors.transparent),
+                        //         height: deviceData.size.height, // Change as per your requirement
+                        //         width: deviceData.size.width, // Change as per your requirement
+                        //         child: GestureDetector(
+                        //           onTap: () => Navigator.of(context).pop(),
+                        //           child: Center(
+                        //             child: Hero(
+                        //               tag: Platform.isAndroid
+                        //                   ? tagName
+                        //                   : UniqueKey(),
+                        //               child: QrImage(
+                        //                 size: bodyHeight * 0.3,
+                        //                 data: _dataString,
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   );
+                        // },
                         child: Column(
                           children: <Widget>[
                             SizedBox(
@@ -264,7 +301,8 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
                           child: GestureDetector(
                             onTap: () {
                               Fluttertoast.showToast(
-                                  msg: "Please show your qr code for attendance",
+                                  msg:
+                                      "Please show your qr code for attendance",
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.TOP,
                                   fontSize: 16.0);
@@ -296,26 +334,24 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
                 ),
                 Text(
                   'QR Code for Attendance Check-in',
-                  style: TextStyle(
-                    color: HexColor.greyColor,
-                  ),
+                  style: TextStyle(color: HexColor.greyColor, fontSize: 14),
                 ),
                 SizedBox(
-                  width: 20,
+                  height: 20,
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Column(
                     children: <Widget>[
-                      personalInfo('ID', '6'),
+                      personalInfo('ID', auth.id.toString()),
                       SizedBox(
                         height: 20,
                       ),
-                      personalInfo('Mobile No', '0123456789'),
+                      personalInfo('Mobile No', auth.mobile),
                       SizedBox(
                         height: 20,
                       ),
-                      personalInfo('Table No', '1'),
+                      personalInfo('Table No', auth.table.toString()),
                       SizedBox(
                         height: 20,
                       ),
@@ -332,7 +368,32 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
               style: TextStyle(color: Colors.red),
             ),
             onPressed: () {
-              print('nani');
+              // if use drawer push navigator just use the navigator pop
+              // Navigator.pop(context);
+
+              // Navigator.of(context).pushReplacementNamed('/');
+
+              showPlatformDialog(
+                context: context,
+                builder: (_) => PlatformAlertDialog(
+                  title: Text('Are you sure to Logout'),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('Ok'),
+                      onPressed: () {
+                        Provider.of<Auth>(context, listen: false).logout();
+                        Navigator.pop(context);
+                      },
+                    ),
+                    FlatButton(
+                      child: Text('Cancel'),
+                      onPressed: () => Navigator.pop(context),
+                    )
+                  ],
+                ),
+              );
+
+              
             },
           ),
           SizedBox(

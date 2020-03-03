@@ -26,24 +26,40 @@ class QRFullScreen extends StatelessWidget {
     final tagName = modalData['tagName'];
     final qrData = modalData['qrData'];
 
-    // print({"modalData": modalData});
-
     return PlatformScaffold(
-      appBar: Platform.isIOS ?  PlatformAppBar(title: Text('QR Code'),) : null,
-      body: GestureDetector(
-        onTap: () => Navigator.of(context).pop(),
-        child: Container(
-          child: Center(
-            child: Hero(
-              tag: Platform.isAndroid ? tagName: UniqueKey(),
-              child: QrImage(
-                size: bodyHeight * 0.3,
-                data: qrData,
+        appBar: Platform.isIOS
+            ? PlatformAppBar(
+                title: Text('QR Code'),
+              )
+            : null,
+        body: GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: Container(
+            margin: EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+                // color: Color(0xFFB4C56C).withOpacity(0.01),
+                // borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                ),
+            child: Center(
+              child: Hero(
+                tag: Platform.isAndroid ? tagName : UniqueKey(),
+                child: Container(
+                  // decoration: BoxDecoration(
+                  //   borderRadius: BorderRadius.circular(10),
+                  //   border: Border.all(
+                  //     color: Theme.of(context).primaryColor,
+                  //     width: 10,
+                  //   ),
+                  // ),
+                  child: QrImage(
+                    size: bodyHeight * 0.35,
+                    data: qrData,
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
