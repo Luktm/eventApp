@@ -158,16 +158,12 @@ Future<bool> _exitApp(BuildContext context) {
                   ],
                 ),
                 body: SafeAreaWidget(
-                  child: SafeAreaWidget(
-                    child: Container(
-                      constraints: BoxConstraints(
-                        minHeight: deviceData.size.height,
-                      ),
+                  child: Container(
+                      height: double.infinity,
                       color: backgroundColor,
                       // child: widget.bodyChild,
                       child: _children[_currentIndex],
                     ),
-                  ),
                 ),
               ),
           android: (_) => MaterialScaffoldData(
@@ -176,8 +172,7 @@ Future<bool> _exitApp(BuildContext context) {
                   title: Text(
                     _title[_currentIndex],
                   ),
-                  actions: _currentIndex == 0
-                      ? [
+                  actions: [
                           IconButton(
                             onPressed: () => Navigator.of(context)
                                 .pushNamed(NotificationScreen.routeName),
@@ -185,8 +180,7 @@ Future<bool> _exitApp(BuildContext context) {
                               Icons.notifications_none,
                             ),
                           ),
-                        ]
-                      : null,
+                        ],
                 ),
                 body: SafeAreaWidget(
                   child: Container(

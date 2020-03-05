@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
+import '../models/message.dart';
+
 import '../helpers/hex_color.dart';
 
 class NotificationScreen extends StatelessWidget {
@@ -9,7 +11,18 @@ class NotificationScreen extends StatelessWidget {
   final Color announcmentTitleColor = HexColor('#3C3C3C');
   final Color lineColor = HexColor('#DBDBDB');
 
-  final List<String> entries = <String>['A', 'B', 'C'];
+  final List<Message> entries = [
+    Message(
+        message: 'The Event is stating in 3 hours, see you soon.',
+        time: '1hrs'),
+    Message(
+        message:
+            'The lucky draw will be stating soon, please return to your seats',
+        time: '2hrs'),
+    Message(
+        message: 'The event has ended, thank you for participating',
+        time: '3hrs'),
+  ].reversed.toList();
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +65,7 @@ class NotificationScreen extends StatelessWidget {
             // ),
             Expanded(
               child: ListView.builder(
+                // reverse: true,
                 shrinkWrap: true,
                 itemCount: entries.length,
                 padding: EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -79,7 +93,7 @@ class NotificationScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim.',
+                                  entries[i].message,
                                   style: TextStyle(
                                     fontSize: 13,
                                     color: HexColor.accentColor,
@@ -102,7 +116,7 @@ class NotificationScreen extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                '1 hrs ago',
+                                entries[i].time,
                                 style: TextStyle(
                                   fontSize: 11,
                                 ),

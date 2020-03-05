@@ -1,4 +1,4 @@
-#Tue Mar 03 11:51:00 MYT 2020
+#Thu Mar 05 23:37:36 MYT 2020
 base.0=/Users/cspeed/Desktop/event_app/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

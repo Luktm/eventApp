@@ -8,7 +8,6 @@ import './helpers/hex_color.dart';
 
 import './providers/auth.dart';
 
-
 import './screens/login_screen.dart';
 import './screens/onboarding_screen.dart';
 import './screens/home_screen.dart';
@@ -25,7 +24,6 @@ import './screens/login_screen.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  
   final Color primaryColor = HexColor("#1C93C2");
   final Color backgroundColor = HexColor('#FAFEFF');
   final Color accentColor = HexColor('#DEF6FF');
@@ -65,6 +63,7 @@ class MyApp extends StatelessWidget {
                 ),
                 subtitle1: TextStyle(
                   color: subtitleColor,
+                  fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -79,7 +78,7 @@ class MyApp extends StatelessWidget {
             color: primaryColor,
           ),
           home: auth.isAuth
-              ? HomeScreen()
+              ? !auth.firstTimeLogin ? HomeScreen() : OnboardingScreen()
               : FutureBuilder(
                   future: auth.tryAutoLogin(),
                   builder: (ctx, authSnapshot) =>

@@ -8,23 +8,56 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'dart:io';
+import 'package:screen/screen.dart';
 
-class QRFullScreen extends StatelessWidget {
+class QRFullScreen extends StatefulWidget {
   static const routeName = '/qr-fullscreen';
 
-  // final tagName;
-  // final qrData;
+  final tagName;
+  final qrData;
 
-  // QRFullScreen({this.tagName, this.qrData}) : super();
+  QRFullScreen({this.tagName, this.qrData}) : super();
+
+  @override
+  _QRFullScreenState createState() => _QRFullScreenState();
+}
+
+class _QRFullScreenState extends State<QRFullScreen> {
+  var _isInit = true;
+  bool _isKeptOn = false;
+  double _brightness = 1.0;
+
+  @override
+  void initState() {
+    // Screen.setBrightness(_brightness);
+    // initPlatformState();
+    super.initState();
+  }
+
+  // Future<void> initPlatformState() async {
+  //   bool keptOn = await Screen.isKeptOn;
+  //   double brightness = await Screen.brightness;
+
+  //   setState(() {
+  //     _isKeptOn = keptOn;
+  //     _brightness = brightness;
+  //   });
+  // }
+
+  @override
+  void dispose() {
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final bodyHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).viewInsets.bottom;
 
-    final modalData = ModalRoute.of(context).settings.arguments as Map;
-    final tagName = modalData['tagName'];
-    final qrData = modalData['qrData'];
+    // final modalData = ModalRoute.of(context).settings.arguments as Map;
+    // final tagName = modalData['tagName'];
+    // final qrData = modalData['qrData'];
 
     return PlatformScaffold(
         appBar: Platform.isIOS
@@ -33,7 +66,7 @@ class QRFullScreen extends StatelessWidget {
               )
             : null,
         body: GestureDetector(
-          onTap: () => Navigator.of(context).pop(),
+          onTap: () => Navigator.of(context).pop('done'),
           child: Container(
             margin: EdgeInsets.all(20.0),
             padding: EdgeInsets.all(20.0),
@@ -43,7 +76,7 @@ class QRFullScreen extends StatelessWidget {
                 ),
             child: Center(
               child: Hero(
-                tag: Platform.isAndroid ? tagName : UniqueKey(),
+                tag: Platform.isAndroid ? widget.tagName : UniqueKey(),
                 child: Container(
                   // decoration: BoxDecoration(
                   //   borderRadius: BorderRadius.circular(10),
@@ -54,7 +87,7 @@ class QRFullScreen extends StatelessWidget {
                   // ),
                   child: QrImage(
                     size: bodyHeight * 0.35,
-                    data: qrData,
+                    data: widget.qrData,
                   ),
                 ),
               ),

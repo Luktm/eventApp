@@ -342,7 +342,7 @@ class _LoginScreen extends State<LoginScreen> {
                                   _authData['password'],
                                 );
                               } catch (err) {
-                                showDialogMessage(context, err);
+                                showDialogMessage(context, err.toString());
                               } finally {
                                 setState(() {
                                   _isLoading = false;

@@ -18,12 +18,12 @@ import '../widgets/card_widget.dart';
 class ProgrammeScreen extends StatelessWidget {
   // wanna change lne and time bottom sizedBox, change sizedHeight
   static double sizedHeight = 30;
-  static double programmeNameSizeHeight = 15.5;
+  static double programmeNameSizeHeight = 18;
   final double timeLinePaddingTop = 18.0;
 
   Widget sizedHeightWidget() {
     return SizedBox(
-      height: Platform.isAndroid ? sizedHeight : 35,
+      height: Platform.isAndroid ? sizedHeight + 5 : 35,
     );
   }
 
@@ -49,7 +49,11 @@ class ProgrammeScreen extends StatelessWidget {
   Widget timeWidget(BuildContext context, String time) {
     return Text(
       time,
-      style: Platform.isAndroid ?  Theme.of(context).textTheme.subtitle1 : TextStyle(fontSize: 12,),
+      style: Platform.isAndroid
+          ? Theme.of(context).textTheme.subtitle1
+          : TextStyle(
+              fontSize: 12,
+            ),
     );
   }
 
@@ -59,12 +63,18 @@ class ProgrammeScreen extends StatelessWidget {
     );
   }
 
-  Widget programContainerWidget(deviceData, {bool containerPrimaryColor}) {
+  Widget programContainerWidget(deviceData, eventName,
+      {bool containerPrimaryColor}) {
     return Container(
+    
+      constraints: BoxConstraints(
+        minWidth: (deviceData.size.width - deviceData.padding.bottom) * 0.53,
+      ),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: containerPrimaryColor ? HexColor.primaryColor : HexColor('#F2F2F2'),
+        color:
+            containerPrimaryColor ? HexColor.primaryColor : HexColor('#F2F2F2'),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
@@ -78,11 +88,11 @@ class ProgrammeScreen extends StatelessWidget {
         ],
       ),
       child: Text(
-        'Neque porro quisquam est qui ',
+        eventName,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: containerPrimaryColor ? Colors.white : HexColor.primaryColor,
-          fontSize: (deviceData.size.width - deviceData.padding.bottom) * 0.035,
+          fontSize: (deviceData.size.width - deviceData.padding.bottom) * 0.033,
         ),
       ),
     );
@@ -91,103 +101,113 @@ class ProgrammeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var deviceData = MediaQuery.of(context);
-    
-    return SingleChildScrollView(
-      child: CardWidget(
-        title: 'Programme Agenda',
-        children: <Widget>[
-          Text(
-            '${Date.formattedDate} (${Date.weekday()})',
-            style: TextStyle(
-              fontSize: 12,
-              color: ThemeData.light().primaryColor,
+
+    return Container(
+      height: double.infinity,
+      child: SingleChildScrollView(
+        child: CardWidget(
+          title: 'Programme Agenda',
+          children: <Widget>[
+            Text(
+              '${Date.formattedDate} (${Date.weekday()})',
+              style: TextStyle(
+                fontSize: 12,
+                color: ThemeData.light().primaryColor,
+              ),
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: timeLinePaddingTop),
-                child: Column(
-                  children: <Widget>[
-                    timeWidget(context, '7pm'),
-                    sizedHeightWidget(),
-                    timeWidget(context, '7.30pm'),
-                    sizedHeightWidget(),
-                    timeWidget(context, '8pm'),
-                    sizedHeightWidget(),
-                    timeWidget(context, '8.30pm'),
-                    sizedHeightWidget(),
-                    timeWidget(context, '9pm'),
-                    sizedHeightWidget(),
-                    timeWidget(context, '9.30pm'),
-                    sizedHeightWidget(),
-                  ],
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: timeLinePaddingTop),
+                  child: Column(
+                    children: <Widget>[
+                      timeWidget(context, '7pm'),
+                      sizedHeightWidget(),
+                      timeWidget(context, '7.30pm'),
+                      sizedHeightWidget(),
+                      timeWidget(context, '8pm'),
+                      sizedHeightWidget(),
+                      timeWidget(context, '8.30pm'),
+                      sizedHeightWidget(),
+                      timeWidget(context, '9pm'),
+                      sizedHeightWidget(),
+                      timeWidget(context, '9.30pm'),
+                      sizedHeightWidget(),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: timeLinePaddingTop),
-                child: Column(
-                  children: <Widget>[
-                    circleBoxWidget(),
-                    lineWidget(),
-                    circleBoxWidget(),
-                    lineWidget(),
-                    circleBoxWidget(),
-                    lineWidget(),
-                    circleBoxWidget(),
-                    lineWidget(),
-                    circleBoxWidget(),
-                    lineWidget(),
-                    circleBoxWidget(),
-                  ],
+                SizedBox(
+                  width: 10,
                 ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Column(
-                children: <Widget>[
-                  programContainerWidget(
-                    deviceData,
-                    containerPrimaryColor: true,
+                Padding(
+                  padding: EdgeInsets.only(top: timeLinePaddingTop),
+                  child: Column(
+                    children: <Widget>[
+                      circleBoxWidget(),
+                      lineWidget(),
+                      circleBoxWidget(),
+                      lineWidget(),
+                      circleBoxWidget(),
+                      lineWidget(),
+                      circleBoxWidget(),
+                      lineWidget(),
+                      circleBoxWidget(),
+                      lineWidget(),
+                      circleBoxWidget(),
+                    ],
                   ),
-                  programNameSizedWidget(),
-                  programContainerWidget(
-                    deviceData,
-                    containerPrimaryColor: false,
-                  ),
-                  programNameSizedWidget(),
-                  programContainerWidget(
-                    deviceData,
-                    containerPrimaryColor: true,
-                  ),
-                  programNameSizedWidget(),
-                  programContainerWidget(
-                    deviceData,
-                    containerPrimaryColor: false,
-                  ),
-                  programNameSizedWidget(),
-                  programContainerWidget(
-                    deviceData,
-                    containerPrimaryColor: true,
-                  ),
-                  programNameSizedWidget(),
-                  programContainerWidget(
-                    deviceData,
-                    containerPrimaryColor: false,
-                  ),
-                ],
-              )
-            ],
-          )
-        ],
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    programContainerWidget(
+                      deviceData,
+                      'Registration and Check-In',
+                      containerPrimaryColor: true,
+                    ),
+                    programNameSizedWidget(),
+                    programContainerWidget(
+                      deviceData,
+                      'Event Announcement',
+                      containerPrimaryColor: false,
+                    ),
+                    programNameSizedWidget(),
+                    programContainerWidget(
+                      deviceData,
+                      'Starting Dinner',
+                      containerPrimaryColor: true,
+                    ),
+                    programNameSizedWidget(),
+                    programContainerWidget(
+                      deviceData,
+                      'Organizer and Guest Introduction',
+                      containerPrimaryColor: false,
+                    ),
+                    programNameSizedWidget(),
+                    programContainerWidget(
+                      deviceData,
+                      'Lucky Draw',
+                      containerPrimaryColor: true,
+                    ),
+                    programNameSizedWidget(),
+                    programContainerWidget(
+                      deviceData,
+                      'Event End',
+                      containerPrimaryColor: false,
+                    ),
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

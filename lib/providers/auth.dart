@@ -22,7 +22,7 @@ class Auth with ChangeNotifier {
 
   bool _firstTimeLogin = true;
 
-  static String _apiBaseUrl = 'http://192.168.68.140:8000';
+  static String _apiBaseUrl = 'http://cems.jnghng.com/api';
 
   bool get isAuth {
     // return token != null;
@@ -61,8 +61,12 @@ class Auth with ChangeNotifier {
     return _table;
   }
 
-  Future get firstTimeLogin   async{
+  bool get firstTimeLogin {
     return _firstTimeLogin;
+  }
+
+  String get status {
+    return _status;
   }
 
   // String get name {
@@ -71,7 +75,9 @@ class Auth with ChangeNotifier {
 
   Future<void> login(String email, String password) async {
     // print('login functino');
-    var url = '$_apiBaseUrl/api/login?email=$email&password=$password';
+    var url = '$_apiBaseUrl/login?email=$email&password=$password';
+
+    print({'url': url});
 
     try {
       final response =
@@ -82,7 +88,6 @@ class Auth with ChangeNotifier {
       if (responseData['status'] == 'fail') {
         throw (responseData['message']);
       }
-
 
       _status = responseData['status'];
       _message = responseData['message'];
@@ -97,8 +102,8 @@ class Auth with ChangeNotifier {
 
       final prefs = await SharedPreferences.getInstance();
 
-      if(prefs.containsKey('firstTimeLogin') && !prefs.getBool('firstTimeLogin')) {
-        _firstTimeLogin = false;
+      if (prefs.containsKey('firstTimeLogin')) {
+        _firstTimeLogin = prefs.getBool('firstTimeLogin');
       }
 
       notifyListeners();
@@ -111,7 +116,7 @@ class Auth with ChangeNotifier {
           'table': _table,
           'mobile': _mobile,
           'email': _email,
-          'luckyNo': _lucky
+          'lucky': _lucky
         },
       );
 
@@ -126,6 +131,10 @@ class Auth with ChangeNotifier {
 
     if (!prefs.containsKey('userData')) {
       return false;
+    }
+
+    if (prefs.containsKey('firstTimeLogin')) {
+      _firstTimeLogin = prefs.getBool('firstTimeLogin');
     }
 
     final extractedUserData =
@@ -143,13 +152,21 @@ class Auth with ChangeNotifier {
     _table = extractedUserData['table'];
     _mobile = extractedUserData['mobile'];
     _email = extractedUserData['email'];
-    _lucky = extractedUserData['luckyNo'];
+    _lucky = extractedUserData['lucky'];
     // _token = extractedUserData['token'];
     // _expiryDate = expiryDate;
 
     notifyListeners();
     // _autoLogout();
     return true;
+  }
+
+  Future<void> firstTimeLoginMethod() async {
+    _firstTimeLogin = false;
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('firstTimeLogin', false);
+
+    notifyListeners();
   }
 
   Future<void> logout() async {
@@ -166,8 +183,53 @@ class Auth with ChangeNotifier {
     notifyListeners();
 
     final prefs = await SharedPreferences.getInstance();
-    // prefs.remove('userData'); <= if got more instance key
-    prefs.clear();
+    prefs.remove('userData'); // <= if got more instance key
+    // prefs.clear();
+  }
+
+  int _increment = 0;
+
+  Future<void> profileKeepFetch() async {
+    var url = "$apiBaseUrl/status?id=$_id";
+
+    try {
+      final response = await http.get(url);
+
+      final responseData = json.decode(response.body);
+
+      _status = responseData['status'];
+      _message = responseData['message'];
+      _id = responseData['id'];
+      _table = responseData['table'];
+      _mobile = responseData['mobile'];
+      _email = responseData['email'];
+      _lucky = responseData['lucky'];
+
+      print(_lucky);
+
+      notifyListeners();
+
+      // final prefs = await SharedPreferences.getInstance();
+
+      // if (prefs.containsKey('userData')) {
+      //   prefs.remove('userData'); // <= if got more instance key
+      // }
+
+      // final userData = json.encode({
+      //   "status": _status,
+      //   "message": _message,
+      //   'id': _id,
+      //   'table': _table,
+      //   'mobile': _mobile,
+      //   'email': _email,
+      //   'lucky': _lucky
+      // });
+
+      // prefs.setString('userData', userData);
+
+    } catch (err) {
+      throw err;
+    }
   }
 
   // Future<void> _autoLogout() {

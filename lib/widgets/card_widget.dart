@@ -48,7 +48,8 @@ class CardWidget extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Padding(
+                  child: Container(
+                    // width: (deviceData.size.width - deviceData.padding.bottom) * 0.3,
                     padding: EdgeInsets.all(20.0),
                     child: Column(
                       children: <Widget>[
