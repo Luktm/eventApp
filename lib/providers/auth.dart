@@ -16,6 +16,7 @@ class Auth with ChangeNotifier {
   String _mobile;
   String _email;
   String _lucky;
+  String _name;
 
   Timer _authTimer;
   DateTime _expiryDate;
@@ -29,6 +30,10 @@ class Auth with ChangeNotifier {
 
     // for no token purpose
     return _mobile != null;
+  }
+
+  String get name {
+    return _name;
   }
 
   String get token {
@@ -96,6 +101,7 @@ class Auth with ChangeNotifier {
       _mobile = responseData['mobile'];
       _email = responseData['email'];
       _lucky = responseData['lucky'];
+      _name = responseData['name'];
       // _token = responseData['token'];
 
       // _expiryDate = DateTime.now().add(Duration(seconds: int.parse(responseData['expiresIn'])));
@@ -116,7 +122,8 @@ class Auth with ChangeNotifier {
           'table': _table,
           'mobile': _mobile,
           'email': _email,
-          'lucky': _lucky
+          'lucky': _lucky,
+          'name': _name
         },
       );
 
@@ -153,6 +160,7 @@ class Auth with ChangeNotifier {
     _mobile = extractedUserData['mobile'];
     _email = extractedUserData['email'];
     _lucky = extractedUserData['lucky'];
+    _name = extractedUserData['name'];
     // _token = extractedUserData['token'];
     // _expiryDate = expiryDate;
 
@@ -204,8 +212,9 @@ class Auth with ChangeNotifier {
       _mobile = responseData['mobile'];
       _email = responseData['email'];
       _lucky = responseData['lucky'];
+      _name  = responseData['name'];
 
-      print(_lucky);
+      // print(_name);
 
       notifyListeners();
 

@@ -398,7 +398,7 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
                         SizedBox(
                           height: 20,
                         ),
-                        personalInfo('Full Name', 'Johann')
+                        personalInfo('Full Name', auth.name.toString())
                       ],
                     ),
                   ),
