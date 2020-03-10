@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class HexColor extends Color {
-  static final Color primaryColor = HexColor('#1C93C2');
+  static final Color primaryColor = HexColor('#01147A');
   static final Color accentColor = HexColor('#3C3C3C');
   static final Color greyColor = HexColor('#B4B4B4');
 

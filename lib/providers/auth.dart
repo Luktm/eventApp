@@ -85,8 +85,7 @@ class Auth with ChangeNotifier {
     print({'url': url});
 
     try {
-      final response =
-          await http.get(url, headers: {"Content-type": 'application/json'});
+      final response = await http.get(url, headers: {"Content-type": 'application/json'});
 
       final responseData = json.decode(response.body);
 
@@ -113,6 +112,7 @@ class Auth with ChangeNotifier {
       }
 
       notifyListeners();
+      print('abc');
 
       final userData = json.encode(
         {
@@ -212,7 +212,7 @@ class Auth with ChangeNotifier {
       _mobile = responseData['mobile'];
       _email = responseData['email'];
       _lucky = responseData['lucky'];
-      _name  = responseData['name'];
+      _name = responseData['name'];
 
       // print(_name);
 

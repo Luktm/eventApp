@@ -112,7 +112,7 @@ class ProgrammeScreen extends StatelessWidget {
               '${Date.formattedDate} (${Date.weekday()})',
               style: TextStyle(
                 fontSize: 12,
-                color: ThemeData.light().primaryColor,
+                color:  Platform.isAndroid ?  Theme.of(context).primaryColor : HexColor.primaryColor,
               ),
             ),
             SizedBox(

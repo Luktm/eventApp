@@ -20,13 +20,15 @@ import './screens/programme_screen.dart';
 import './screens/qr_full_screen.dart';
 import './screens/splash_screen.dart';
 import './screens/login_screen.dart';
+import './screens/forgot_password_screen.dart';
+import './screens/update_password_screen.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  final Color primaryColor = HexColor("#1C93C2");
+  final Color primaryColor = HexColor("#01147A");
   final Color backgroundColor = HexColor('#FAFEFF');
-  final Color accentColor = HexColor('#DEF6FF');
+  final Color accentColor = HexColor('#3C3C3C');
   // final Color subtitleColor = HexColor('#3C3C3C');
   final Color subtitleColor = HexColor('#000000');
 
@@ -90,6 +92,8 @@ class MyApp extends StatelessWidget {
             QRFullScreen.routeName: (ctx) => QRFullScreen(),
             NotificationScreen.routeName: (ctx) => NotificationScreen(),
             ProfileQRScreen.routeName: (ctx) => ProfileQRScreen(),
+            ForgotPasswordScreen.routeName: (ctx) => ForgotPasswordScreen(),
+            UpdatePasswordScreen.routeName: (ctx) => UpdatePasswordScreen()
           },
         ),
       ),

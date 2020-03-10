@@ -7,6 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:io' show Platform;
 import 'package:intl/intl.dart';
 
 import '../helpers/hex_color.dart';
@@ -258,7 +259,7 @@ class _LocationScreen extends State<LocationScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
-                color: Theme.of(context).primaryColor,
+                color: Platform.isAndroid ?  Theme.of(context).primaryColor : HexColor.primaryColor,
                 onPressed: () => MapsLauncher.launchCoordinates(
                   _initCenter.latitude,
                   _initCenter.longitude,

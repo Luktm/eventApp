@@ -4,13 +4,17 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:io' show Platform;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../helpers/hex_color.dart';
 import '../providers/auth.dart';
 
 import '../widgets/logo_widget.dart';
+
+import './forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -162,7 +166,10 @@ class _LoginScreen extends State<LoginScreen> {
                             'Email',
                             textAlign: TextAlign.left,
                             style: TextStyle(
-                                color: ThemeData.light().primaryColor),
+                              color: Platform.isAndroid
+                                  ? Theme.of(context).primaryColor
+                                  : HexColor.primaryColor,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -189,7 +196,7 @@ class _LoginScreen extends State<LoginScreen> {
                             android: (_) => MaterialTextFieldData(
                               controller: emailController,
                               onSubmitted: (_) {
-                                Focus.of(context)
+                                FocusScope.of(context)
                                     .requestFocus(_passwordFocusNode);
                               },
                               onChanged: (String text) {
@@ -205,7 +212,7 @@ class _LoginScreen extends State<LoginScreen> {
                             ),
                             ios: (_) => CupertinoTextFieldData(
                               onSubmitted: (_) {
-                                Focus.of(context)
+                                FocusScope.of(context)
                                     .requestFocus(_passwordFocusNode);
                               },
                               controller: emailController,
@@ -231,7 +238,10 @@ class _LoginScreen extends State<LoginScreen> {
                             'Password',
                             textAlign: TextAlign.left,
                             style: TextStyle(
-                                color: ThemeData.light().primaryColor),
+                              color: Platform.isAndroid
+                                  ? Theme.of(context).primaryColor
+                                  : HexColor.primaryColor,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -295,7 +305,9 @@ class _LoginScreen extends State<LoginScreen> {
                             borderRadius: BorderRadius.circular(30.0),
                           ),
                           child: RaisedButton(
-                            color: ThemeData.light().primaryColor,
+                            color: Platform.isAndroid
+                                ? Theme.of(context).primaryColor
+                                : HexColor.primaryColor,
                             onPressed: () async {
                               if (_authData['email'].isEmpty) {
                                 return showDialogMessage(
@@ -359,12 +371,18 @@ class _LoginScreen extends State<LoginScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
+                        FlatButton(
+                          onPressed: () => Navigator.pushNamed(context, ForgotPasswordScreen.routeName),
+                          child: Text(
+                            'Forgot Password',
+                          ),
+                        )
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

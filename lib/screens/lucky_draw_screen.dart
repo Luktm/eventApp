@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -221,7 +222,7 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
             // ),
             SizedBox(
               height: 20,
-            ),   
+            ),
             Container(
               // padding: EdgeInsets.symmetric(horizontal: 40),
               child: Form(
@@ -233,7 +234,9 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 2,
-                          color: Theme.of(context).primaryColor,
+                          color: Platform.isAndroid
+                              ? Theme.of(context).primaryColor
+                              : HexColor.primaryColor,
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -241,12 +244,15 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
                       // height: 50,
                       child: TextFormField(
                         // controller: _boxOneController,
-                        initialValue: auth.lucky !=null ? auth.lucky.substring(0, 1) : null,
+                        initialValue: auth.lucky != null
+                            ? auth.lucky.substring(0, 1)
+                            : null,
                         enabled: false,
                         focusNode: _boxOneFocusNode,
                         onChanged: (String text) {
                           if (text.isNotEmpty) {
-                            FocusScope.of(context).requestFocus(_boxTwoFocusNode);
+                            FocusScope.of(context)
+                                .requestFocus(_boxTwoFocusNode);
                           }
                         },
                         onFieldSubmitted: (_) {
@@ -256,13 +262,16 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 20,
-                          color: Theme.of(context).primaryColor,
-                        ),
+                            fontSize: 20,
+                            color: Platform.isAndroid
+                                ? Theme.of(context).primaryColor
+                                : HexColor.primaryColor),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                width: 2, color: Theme.of(context).primaryColor),
+                              width: 2,
+                              color: Platform.isAndroid ? Theme.of(context).primaryColor : HexColor.primaryColor,
+                            ),
                           ),
                           border: OutlineInputBorder(
                             // borderRadius: BorderRadius.all(
@@ -282,14 +291,17 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
                       width: 40,
                       decoration: BoxDecoration(
                         border: Border.all(
-                          width: 2,
-                          color: Theme.of(context).primaryColor,
-                        ),
+                            width: 2,
+                            color: Platform.isAndroid
+                                ? Theme.of(context).primaryColor
+                                : HexColor.primaryColor),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       // height: 50,
                       child: TextFormField(
-                        initialValue: auth.lucky !=null ?  auth.lucky.substring(1, 2) : null,
+                        initialValue: auth.lucky != null
+                            ? auth.lucky.substring(1, 2)
+                            : null,
                         // controller: _boxTwoController,
                         enabled: false,
                         focusNode: _boxTwoFocusNode,
@@ -298,23 +310,31 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
                             FocusScope.of(context)
                                 .requestFocus(_boxThreeFocusNode);
                           } else if (text.isEmpty) {
-                            FocusScope.of(context).requestFocus(_boxOneFocusNode);
+                            FocusScope.of(context)
+                                .requestFocus(_boxOneFocusNode);
                           }
                         },
                         onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_boxThreeFocusNode);
+                          FocusScope.of(context)
+                              .requestFocus(_boxThreeFocusNode);
                         },
                         inputFormatters: [LengthLimitingTextInputFormatter(1)],
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
-                          color: Theme.of(context).primaryColor,
+                          color: Platform.isAndroid
+                              ? Theme.of(context).primaryColor
+                              : HexColor.primaryColor,
                         ),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                width: 2, color: Theme.of(context).primaryColor),
+                              width: 2,
+                              color: Platform.isAndroid
+                                  ? Theme.of(context).primaryColor
+                                  : HexColor.primaryColor,
+                            ),
                           ),
                           border: OutlineInputBorder(
                             // borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -332,14 +352,18 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 2,
-                          color: Theme.of(context).primaryColor,
+                          color: Platform.isAndroid
+                              ? Theme.of(context).primaryColor
+                              : HexColor.primaryColor,
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       width: 40,
                       // height: 50,
                       child: TextFormField(
-                        initialValue: auth.lucky !=null ? auth.lucky.substring(2, 3) : null,
+                        initialValue: auth.lucky != null
+                            ? auth.lucky.substring(2, 3)
+                            : null,
                         // controller: _boxThreeController,
                         focusNode: _boxThreeFocusNode,
                         enabled: false,
@@ -348,18 +372,22 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
                             FocusScope.of(context)
                                 .requestFocus(_boxFourFocusNode);
                           } else if (text.isEmpty) {
-                            FocusScope.of(context).requestFocus(_boxTwoFocusNode);
+                            FocusScope.of(context)
+                                .requestFocus(_boxTwoFocusNode);
                           }
                         },
                         onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_boxFourFocusNode);
+                          FocusScope.of(context)
+                              .requestFocus(_boxFourFocusNode);
                         },
                         inputFormatters: [LengthLimitingTextInputFormatter(1)],
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
-                          color: Theme.of(context).primaryColor,
+                          color: Platform.isAndroid
+                              ? Theme.of(context).primaryColor
+                              : HexColor.primaryColor,
                         ),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -385,13 +413,17 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 2,
-                          color: Theme.of(context).primaryColor,
+                          color: Platform.isAndroid
+                              ? Theme.of(context).primaryColor
+                              : HexColor.primaryColor,
                         ),
                         borderRadius: BorderRadius.circular(9),
                       ),
                       // height: 50,
                       child: TextFormField(
-                        initialValue: auth.lucky !=null ?  auth.lucky.substring(3, 4) : null,
+                        initialValue: auth.lucky != null
+                            ? auth.lucky.substring(3, 4)
+                            : null,
                         enabled: false,
                         // controller: _boxFourController,
                         focusNode: _boxFourFocusNode,
@@ -412,12 +444,18 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
-                          color: Theme.of(context).primaryColor,
+                          color: Platform.isAndroid
+                              ? Theme.of(context).primaryColor
+                              : HexColor.primaryColor,
                         ),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                width: 2, color: Theme.of(context).primaryColor),
+                              width: 2,
+                              color: Platform.isAndroid
+                                  ? Theme.of(context).primaryColor
+                                  : HexColor.primaryColor,
+                            ),
                           ),
                           border: OutlineInputBorder(
                             // borderRadius: BorderRadius.all(

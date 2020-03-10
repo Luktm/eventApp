@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:event_app/widgets/logo_widget.dart';
 
 import 'package:flutter/material.dart';
@@ -7,6 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../providers/auth.dart';
 
+import '../helpers/hex_color.dart';
+
 class OnboardingScreen extends StatefulWidget {
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
@@ -15,6 +19,7 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   var currentPageValue = 0;
   var _isInit = true;
+  
 
   PageController controller = PageController(initialPage: 0, keepPage: false);
 
@@ -30,10 +35,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             height: 20,
           ),
           Text(
-            'PHONE NUMBER REGISTER',
+            'Map & Details',
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: ThemeData.light().primaryColor,
+                color: HexColor.primaryColor,
                 fontSize: 20,
                 fontWeight: FontWeight.bold),
           ),
@@ -43,11 +48,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eleifend.',
+              'See event location and click open the map.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 15,
-                color: ThemeData.light().primaryColor,
+                color: HexColor.primaryColor,
               ),
             ),
           )
@@ -59,16 +64,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Column(
         children: <Widget>[
           Image.asset(
-            'assets/images/onboarding-01.png',
+            'assets/images/onboarding-02.png',
           ),
           SizedBox(
             height: 20,
           ),
           Text(
-            'PHONE NUMBER REGISTER',
+            'Programme',
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: ThemeData.light().primaryColor,
+                color: HexColor.primaryColor,
                 fontSize: 20,
                 fontWeight: FontWeight.bold),
           ),
@@ -78,11 +83,81 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eleifend.',
+              'List programme and time will indicate current event.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 15,
-                color: ThemeData.light().primaryColor,
+                 color: HexColor.primaryColor,
+              ),
+            ),
+          )
+        ],
+      ),
+    ),
+    Container(
+      color: Colors.white,
+      child: Column(
+        children: <Widget>[
+          Image.asset(
+            'assets/images/onboarding-03.png',
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            'Lucky Draw',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: HexColor.primaryColor,
+                fontSize: 20,
+                fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              'Lucky draw number will show in lucky draw session.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 15,
+                 color: HexColor.primaryColor,
+              ),
+            ),
+          )
+        ],
+      ),
+    ),
+    Container(
+      color: Colors.white,
+      child: Column(
+        children: <Widget>[
+          Image.asset(
+            'assets/images/onboarding-04.png',
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            'Profile QR Code',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: HexColor.primaryColor,
+                fontSize: 20,
+                fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              'show your qr code to receptionist for attendance',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 15,
+                 color: HexColor.primaryColor,
               ),
             ),
           )
@@ -231,7 +306,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       child: Text(
                         'Skip',
                         style: TextStyle(
-                          color: ThemeData.light().primaryColor,
+                          color:  Platform.isAndroid ?  Theme.of(context).primaryColor : HexColor.primaryColor,
                         ),
                       ),
                     ),
@@ -246,16 +321,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         'Next',
                         style: TextStyle(color: Colors.white),
                       ),
-                      color: ThemeData.light().primaryColor,
+                      color:  Platform.isAndroid ?  Theme.of(context).primaryColor : HexColor.primaryColor,
                       onPressed: () async {
-                        if (currentPageValue >= 1) {
+                        if (currentPageValue >= (introWidgets.length-1)) {
                           return Provider.of<Auth>(context, listen: false)
                               .firstTimeLoginMethod();
                         }
 
                         if (controller.hasClients) {
                           controller.animateToPage(
-                            1,
+                            ++currentPageValue,
                             duration: Duration(milliseconds: 400),
                             curve: Curves.easeInOut,
                           );

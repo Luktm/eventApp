@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "event-app-icon.png",
+      "filename" : "Event-app-icon.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "event-app-icon-1.png",
+      "filename" : "Event-app-icon-1.jpg",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "event-app-icon-2.png",
+      "filename" : "Event-app-icon-2.jpg",
       "scale" : "3x"
     }
   ],

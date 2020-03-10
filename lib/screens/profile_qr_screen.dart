@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,9 @@ import '../helpers/hex_color.dart';
 
 import './qr_full_screen.dart';
 import '../screens/login_screen.dart';
-import '../main.dart';
+import '../screens/update_password_screen.dart';
+
+
 
 import '../providers/auth.dart';
 
@@ -199,10 +202,11 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(top: 30, left: 25, right: 25, bottom: 5),
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: Colors.white,
+                borderRadius: BorderRadiusDirectional.circular(10),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.2),
@@ -214,12 +218,29 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
               ),
               child: Column(
                 children: <Widget>[
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: PlatformIconButton(
+                      onPressed: () => Navigator.of(context).pushNamed(UpdatePasswordScreen.routeName),
+                      iosIcon: Icon(
+                        CupertinoIcons.settings,
+                        size: 28.0,
+                        color: Colors.grey,
+                      ),
+                      androidIcon: Icon(
+                        Icons.settings,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
                   Container(
                     // margin: EdgeInsets.only(top: 10),
                     width: deviceData.size.width * 0.4,
                     decoration: BoxDecoration(
                         border: Border.all(
-                          color: Theme.of(context).primaryColor,
+                          color: Platform.isAndroid
+                              ? Theme.of(context).primaryColor
+                              : HexColor.primaryColor,
                         ),
                         borderRadius: BorderRadius.circular(qrRadius)),
                     child: Column(
