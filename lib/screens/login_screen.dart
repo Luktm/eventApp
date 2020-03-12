@@ -373,12 +373,12 @@ class _LoginScreen extends State<LoginScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        FlatButton(
-                          onPressed: () => Navigator.pushNamed(context, ForgotPasswordScreen.routeName),
-                          child: Text(
-                            'Forgot Password',
-                          ),
-                        )
+                        // FlatButton(
+                        //   onPressed: () => Navigator.pushNamed(context, ForgotPasswordScreen.routeName),
+                        //   child: Text(
+                        //     'Forgot Password',
+                        //   ),
+                        // )
                       ],
                     ),
                   ),

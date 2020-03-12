@@ -24,6 +24,7 @@ class Auth with ChangeNotifier {
   bool _firstTimeLogin = true;
 
   static String _apiBaseUrl = 'http://cems.jnghng.com/api';
+  // static String _apiBaseUrl = 'http://192.168.68.116:8000/api';
 
   bool get isAuth {
     // return token != null;
@@ -74,6 +75,9 @@ class Auth with ChangeNotifier {
     return _status;
   }
 
+  String get email {
+    return _email;
+  }
   // String get name {
   //   return _u
   // }

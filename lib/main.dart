@@ -7,6 +7,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import './helpers/hex_color.dart';
 
 import './providers/auth.dart';
+import './providers/profile.dart';
 
 import './screens/login_screen.dart';
 import './screens/onboarding_screen.dart';
@@ -49,8 +50,20 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    return ChangeNotifierProvider.value(
-      value: Auth(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        ),
+        ChangeNotifierProxyProvider<Auth, Profile>(
+          // create: (_) => Provider.of<Profile>(context),
+          update: (_, auth, previousProfile) => Profile(
+            auth.email,
+            auth.apiBaseUrl,
+            // previousProfile == null ? [] : previousProfile.item
+          ),
+        )
+      ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => PlatformApp(
           title: 'Event Application',
