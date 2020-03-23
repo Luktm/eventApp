@@ -202,7 +202,7 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(top: 30, left: 25, right: 25, bottom: 5),
-              padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              padding: EdgeInsets.all(20),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -218,21 +218,21 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
               ),
               child: Column(
                 children: <Widget>[
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: PlatformIconButton(
-                      onPressed: () => Navigator.of(context).pushNamed(UpdatePasswordScreen.routeName),
-                      iosIcon: Icon(
-                        CupertinoIcons.settings,
-                        size: 28.0,
-                        color: Colors.grey,
-                      ),
-                      androidIcon: Icon(
-                        Icons.settings,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.topRight,
+                  //   child: PlatformIconButton(
+                  //     onPressed: () => Navigator.of(context).pushNamed(UpdatePasswordScreen.routeName),
+                  //     iosIcon: Icon(
+                  //       CupertinoIcons.settings,
+                  //       size: 28.0,
+                  //       color: Colors.grey,
+                  //     ),
+                  //     androidIcon: Icon(
+                  //       Icons.settings,
+                  //       color: Colors.grey,
+                  //     ),
+                  //   ),
+                  // ),
                   Container(
                     // margin: EdgeInsets.only(top: 10),
                     width: deviceData.size.width * 0.4,
@@ -426,38 +426,38 @@ class _ProfileQRScreenState extends State<ProfileQRScreen> {
                 ],
               ),
             ),
-            FlatButton(
-              child: Text(
-                'Logout',
-                style: TextStyle(color: Colors.red),
-              ),
-              onPressed: () {
-                // if use drawer push navigator just use the navigator pop
-                // Navigator.pop(context);
+            // FlatButton(
+            //   child: Text(
+            //     'Logout',
+            //     style: TextStyle(color: Colors.red),
+            //   ),
+            //   onPressed: () {
+            //     // if use drawer push navigator just use the navigator pop
+            //     // Navigator.pop(context);
 
-                // Navigator.of(context).pushReplacementNamed('/');
+            //     // Navigator.of(context).pushReplacementNamed('/');
 
-                showPlatformDialog(
-                  context: context,
-                  builder: (_) => PlatformAlertDialog(
-                    title: Text('Are you sure to Logout'),
-                    actions: <Widget>[
-                      FlatButton(
-                        child: Text('Ok'),
-                        onPressed: () {
-                          Provider.of<Auth>(context, listen: false).logout();
-                          Navigator.pop(context);
-                        },
-                      ),
-                      FlatButton(
-                        child: Text('Cancel'),
-                        onPressed: () => Navigator.pop(context),
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
+            //     showPlatformDialog(
+            //       context: context,
+            //       builder: (_) => PlatformAlertDialog(
+            //         title: Text('Are you sure to Logout'),
+            //         actions: <Widget>[
+            //           FlatButton(
+            //             child: Text('Ok'),
+            //             onPressed: () {
+            //               Provider.of<Auth>(context, listen: false).logout();
+            //               Navigator.pop(context);
+            //             },
+            //           ),
+            //           FlatButton(
+            //             child: Text('Cancel'),
+            //             onPressed: () => Navigator.pop(context),
+            //           )
+            //         ],
+            //       ),
+            //     );
+            //   },
+            // ),
             SizedBox(
               height: 10,
             )

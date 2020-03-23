@@ -79,7 +79,7 @@ class _LocationScreen extends State<LocationScreen> {
       height: double.infinity,
       child: SingleChildScrollView(
         child: CardWidget(
-          title: 'Venue & Even Detail',
+          title: 'Venue & Event Detail',
           children: <Widget>[
             Align(
               alignment: Alignment.centerLeft,

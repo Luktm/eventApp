@@ -23,7 +23,7 @@ class Auth with ChangeNotifier {
 
   bool _firstTimeLogin = true;
 
-  static String _apiBaseUrl = 'http://cems.jnghng.com/api';
+  static String _apiBaseUrl = 'https://cems.jnghng.com/api';
   // static String _apiBaseUrl = 'http://192.168.68.116:8000/api';
 
   bool get isAuth {
@@ -83,7 +83,7 @@ class Auth with ChangeNotifier {
   // }
 
   Future<void> login(String email, String password) async {
-    // print('login functino');
+    print('login functino');
     var url = '$_apiBaseUrl/login?email=$email&password=$password';
 
     print({'url': url});

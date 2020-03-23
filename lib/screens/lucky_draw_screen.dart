@@ -93,6 +93,7 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
 
     return Container(
       height: double.infinity,
+      width: double.infinity,
       child: SingleChildScrollView(
         child: CardWidget(
           title: 'Lucky Draw',

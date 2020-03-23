@@ -23,6 +23,11 @@ import './screens/splash_screen.dart';
 import './screens/login_screen.dart';
 import './screens/forgot_password_screen.dart';
 import './screens/update_password_screen.dart';
+import './screens/privacy_policy_screen.dart';
+import './screens/feedback_screen.dart';
+import './screens/setting_screen.dart';
+import './screens/register_screen.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -42,7 +47,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    final cupertinoTheme = new CupertinoThemeData(
+    final cupertinoTheme =  CupertinoThemeData(
       brightness: brightness, // if null will use the system theme
       primaryColor: CupertinoDynamicColor.withBrightness(
         color: primaryColor,
@@ -106,7 +111,11 @@ class MyApp extends StatelessWidget {
             NotificationScreen.routeName: (ctx) => NotificationScreen(),
             ProfileQRScreen.routeName: (ctx) => ProfileQRScreen(),
             ForgotPasswordScreen.routeName: (ctx) => ForgotPasswordScreen(),
-            UpdatePasswordScreen.routeName: (ctx) => UpdatePasswordScreen()
+            UpdatePasswordScreen.routeName: (ctx) => UpdatePasswordScreen(),
+            PrivacyPolicyScreen.routeName: (ctx) => PrivacyPolicyScreen(),
+            SettingScreen.routeName: (ctx) => SettingScreen(),
+            FeedbackScreen.routeName: (ctx) => FeedbackScreen(),
+            RegisterScreen.routeName: (ctx) => RegisterScreen()
           },
         ),
       ),

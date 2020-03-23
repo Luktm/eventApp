@@ -67,7 +67,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
       backgroundColor: Colors.white,
       body: SafeAreaWidget(
-              child: Padding(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             // crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +91,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
               Text(
                 'Please enter your email address, you will receive a link to create a new password via email',
-                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
               ),
               SizedBox(
                 height: 20,
@@ -157,9 +158,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     'Send',
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize:
-                            (deviceData.size.width - deviceData.padding.bottom) *
-                                0.05),
+                        fontSize: (deviceData.size.width -
+                                deviceData.padding.bottom) *
+                            0.05),
                   ),
                 ),
               )

@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -12,11 +13,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../helpers/hex_color.dart';
 import '../providers/auth.dart';
 
+import '../screens/register_screen.dart';
+
 import '../widgets/logo_widget.dart';
 
 import './forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+
+  static const routeName = '/login-screen';
+  
   @override
   _LoginScreen createState() => _LoginScreen();
 }
@@ -383,6 +389,9 @@ class _LoginScreen extends State<LoginScreen> {
                     ),
                   ),
                 ),
+                SizedBox(height: 10,),
+                FlatButton(child: Text("Don't have Account?"), onPressed: ()=>Navigator.pushNamed(context, RegisterScreen.routeName),),
+                
               ],
             ),
           ),

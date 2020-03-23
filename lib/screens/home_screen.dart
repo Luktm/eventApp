@@ -12,6 +12,7 @@ import '../screens/notification_screen.dart';
 import '../screens/profile_qr_screen.dart';
 import '../screens/programme_screen.dart';
 import '../screens/qr_full_screen.dart';
+import '../screens/setting_screen.dart';
 
 import '../widgets/safe_area_widget.dart';
 import '../helpers/hex_color.dart';
@@ -48,6 +49,7 @@ class _HomeScreen extends State<HomeScreen> {
     ProgrammeScreen(),
     LuckyDrawScreen(),
     ProfileQRScreen(),
+    SettingScreen(),
   ];
 
   final List<String> _title = [
@@ -55,6 +57,7 @@ class _HomeScreen extends State<HomeScreen> {
     'Programme',
     'Lucky Draw',
     'Profile',
+    'Setting'
   ];
 
   Widget platformAppBar() {
@@ -155,6 +158,10 @@ Future<bool> _exitApp(BuildContext context) {
                       icon: Icon(CupertinoIcons.person),
                       title: Text('Profile'),
                     ),
+                     BottomNavigationBarItem(
+                      icon: Icon(CupertinoIcons.settings),
+                      title: Text('Setting'),
+                    ),
                   ],
                 ),
                 body: SafeAreaWidget(
@@ -218,6 +225,10 @@ Future<bool> _exitApp(BuildContext context) {
                         Icons.person,
                       ),
                       title: Text('Profile'),
+                    ),
+                        BottomNavigationBarItem(
+                      icon: Icon(Icons.settings),
+                      title: Text('Setting'),
                     ),
                   ],
                   type: BottomNavigationBarType.fixed,

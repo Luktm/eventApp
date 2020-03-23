@@ -54,7 +54,7 @@ class CardWidget extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          title,
+                          title ?? '',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 15,
@@ -64,8 +64,7 @@ class CardWidget extends StatelessWidget {
                         SizedBox(
                           height: 10,
                         ),
-                        ...children,
-                        
+                        if(children != null) ...children,
                       ],
                     ),
                   ),
