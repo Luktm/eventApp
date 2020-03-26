@@ -38,21 +38,21 @@ class ProgrammeScreen extends StatelessWidget {
     );
   }
 
-  Widget lineWidget() {
+  Widget lineWidget(deviceData) {
     return Container(
       width: 1,
-      height: sizedHeight + 10,
+      height:  (deviceData.size.height - deviceData.padding.bottom) * 0.06,
       color: HexColor.greyColor,
     );
   }
 
-  Widget timeWidget(BuildContext context, String time) {
+  Widget timeWidget(BuildContext context, String time, [deviceData]) {
     return Text(
       time,
       style: Platform.isAndroid
           ? Theme.of(context).textTheme.subtitle1
           : TextStyle(
-              fontSize: 12,
+              fontSize: (deviceData.size.width - deviceData.padding.bottom) * 0.033,
             ),
     );
   }
@@ -66,7 +66,6 @@ class ProgrammeScreen extends StatelessWidget {
   Widget programContainerWidget(deviceData, eventName,
       {bool containerPrimaryColor}) {
     return Container(
-    
       constraints: BoxConstraints(
         minWidth: (deviceData.size.width - deviceData.padding.bottom) * 0.53,
       ),
@@ -92,7 +91,7 @@ class ProgrammeScreen extends StatelessWidget {
         textAlign: TextAlign.center,
         style: TextStyle(
           color: containerPrimaryColor ? Colors.white : HexColor.primaryColor,
-          fontSize: (deviceData.size.width - deviceData.padding.bottom) * 0.033,
+          fontSize: (deviceData.size.width - deviceData.padding.bottom) * 0.03,
         ),
       ),
     );
@@ -126,17 +125,17 @@ class ProgrammeScreen extends StatelessWidget {
                   padding: EdgeInsets.only(top: timeLinePaddingTop),
                   child: Column(
                     children: <Widget>[
-                      timeWidget(context, '7pm'),
+                      timeWidget(context, '7pm', deviceData),
                       sizedHeightWidget(),
-                      timeWidget(context, '7.30pm'),
+                      timeWidget(context, '7.30pm', deviceData),
                       sizedHeightWidget(),
-                      timeWidget(context, '8pm'),
+                      timeWidget(context, '8pm', deviceData),
                       sizedHeightWidget(),
-                      timeWidget(context, '8.30pm'),
+                      timeWidget(context, '8.30pm', deviceData),
                       sizedHeightWidget(),
-                      timeWidget(context, '9pm'),
+                      timeWidget(context, '9pm', deviceData),
                       sizedHeightWidget(),
-                      timeWidget(context, '9.30pm'),
+                      timeWidget(context, '9.30pm',deviceData),
                       sizedHeightWidget(),
                     ],
                   ),
@@ -149,15 +148,15 @@ class ProgrammeScreen extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       circleBoxWidget(),
-                      lineWidget(),
+                      lineWidget(deviceData),
                       circleBoxWidget(),
-                      lineWidget(),
+                      lineWidget(deviceData),
                       circleBoxWidget(),
-                      lineWidget(),
+                      lineWidget(deviceData),
                       circleBoxWidget(),
-                      lineWidget(),
+                      lineWidget(deviceData),
                       circleBoxWidget(),
-                      lineWidget(),
+                      lineWidget(deviceData),
                       circleBoxWidget(),
                     ],
                   ),

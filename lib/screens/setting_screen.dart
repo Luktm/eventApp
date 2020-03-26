@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:event_app/screens/feedback_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart' as syspaths;
+import 'package:image_picker/image_picker.dart';
 
 import '../providers/auth.dart';
 
@@ -13,6 +18,8 @@ import '../widgets/cupertino_listtile_widget.dart';
 import './privacy_policy_screen.dart';
 import './update_password_screen.dart';
 
+import '../helpers/hex_color.dart';
+
 class SettingScreen extends StatefulWidget {
   static const routeName = '/setting-screen';
   @override
@@ -21,6 +28,8 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   final _key = GlobalKey();
+
+  File _storeImage;
 
   bool emailNotificatonVal = false;
 
@@ -37,9 +46,51 @@ class _SettingScreenState extends State<SettingScreen> {
     super.initState();
   }
 
+  Future getImage(ImageSource cameraOption, BuildContext context) async {
+
+    File imageFile = await ImagePicker.pickImage(
+      maxWidth: 800,
+      // imageQuality: 10,
+      source: cameraOption,
+      maxHeight: 800,
+    );
+
+    if (imageFile == null) {
+      return;
+    }
+
+    Navigator.of(context).pop();
+
+    final userName = Provider.of<Auth>(context, listen: false).name;
+
+    // print('Original path: ${imageFile.path}'); // <- File: '/storage/emulated/0/Android/data/com.cspeed.event_app/files/Pictures/scaled_bf969277-887a-4618-8f2f-a449f311874e2119033349675260722.jpg'
+    String dir = path.dirname(imageFile.path); // <- /storage/emulated/0/Android/data/com.cspeed.event_app/files/Pictures
+    String newPath = path.join(dir, '${userName.toLowerCase()}-profile-img.jpg');
+    // print('NewPath: $newPath'); // <- /storage/emulated/0/Android/data/com.cspeed.event_app/files/Pictures/newName.jpg
+    imageFile = imageFile.renameSync(newPath);
+    print(imageFile);
+
+    setState(() {
+      _storeImage = imageFile;
+    });
+
+    // final appDir = await syspaths.getApplicationDocumentsDirectory();
+    // final fileName = path.basename(imageFile.path);
+    // final saveImage = await imageFile.copy('${appDir.path}/$fileName');
+
+    // print({
+    //   "appDir": appDir,
+    //   "fileName": fileName,
+    //   "saveImage": saveImage,
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
     var deviceData = MediaQuery.of(context);
+
+    final profileImg = Provider.of<Auth>(context, listen: false).profileImage;
+    final profileName = Provider.of<Auth>(context, listen: false).name;
 
     return SizedBox.expand(
       key: _key,
@@ -51,29 +102,112 @@ class _SettingScreenState extends State<SettingScreen> {
             SizedBox(
               height: 40,
             ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 6),
-              decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey[300]),
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(30)),
-              // height: 20,
-              width: deviceData.size.width * 0.5,
-              child: Text(
-                "MAIN",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      showPlatformDialog(
+                        context: context,
+                        builder: (BuildContext context) => Dialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.0),
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15),
+                                      child: Text(
+                                        'Change Profile Picture',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Divider(),
+                                    FlatButton(
+                                      onPressed: () =>
+                                          getImage(ImageSource.camera, context),
+                                      child: Text(
+                                        'Upload from Camera',
+                                      ),
+                                    ),
+                                    FlatButton(
+                                      onPressed: () => getImage(
+                                          ImageSource.gallery, context),
+                                      child: Text(
+                                        'Upload from library',
+                                      ),
+                                    ),
+                                    Divider(),
+                                    FlatButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(
+                                        'Cancel',
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )),
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: HexColor.primaryColor,
+                      backgroundImage: profileImg == null
+                          ? _storeImage == null
+                              ? AssetImage(
+                                  'assets/images/profile-placeholder.jpg')
+                              : FileImage(_storeImage)
+                          : NetworkImage(profileImg),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(profileName)
+                ],
               ),
             ),
+            SizedBox(
+              height: 40,
+            ),
+            // Container(
+            //   padding: EdgeInsets.symmetric(vertical: 6),
+            //   decoration: BoxDecoration(
+            //       border: Border.all(width: 1, color: Colors.grey[300]),
+            //       color: Colors.grey[100],
+            //       borderRadius: BorderRadius.circular(30)),
+            //   // height: 20,
+            //   width: deviceData.size.width * 0.5,
+            //   child: Text(
+            //     "MAIN",
+            //     textAlign: TextAlign.center,
+            //     style: TextStyle(
+            //       color: Colors.grey,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: 10,
             ),
             PlatformWidget(
               ios: (_) => ListView(
-                 physics: NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 children: <Widget>[
                   CupertinoListTile(
@@ -96,7 +230,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: ListTile(
                       onTap: () => Navigator.of(context)
-                        .pushNamed(UpdatePasswordScreen.routeName),
+                          .pushNamed(UpdatePasswordScreen.routeName),
                       title: Text(
                         'Password Reset',
                         style: TextStyle(
@@ -111,28 +245,28 @@ class _SettingScreenState extends State<SettingScreen> {
                 ],
               ),
             ),
+            // SizedBox(
+            //   height: 30,
+            // ),
+            // Container(
+            //   padding: EdgeInsets.symmetric(vertical: 6),
+            //   decoration: BoxDecoration(
+            //       border: Border.all(width: 1, color: Colors.grey[300]),
+            //       color: Colors.grey[100],
+            //       borderRadius: BorderRadius.circular(30)),
+            //   // height: 20,
+            //   width: deviceData.size.width * 0.5,
+            //   child: Text(
+            //     "NOTIFICATIONS",
+            //     textAlign: TextAlign.center,
+            //     style: TextStyle(
+            //       color: Colors.grey,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            // ),
             SizedBox(
-              height: 30,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 6),
-              decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey[300]),
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(30)),
-              // height: 20,
-              width: deviceData.size.width * 0.5,
-              child: Text(
-                "NOTIFICATIONS",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
+              height: 20,
             ),
             PlatformWidget(
               ios: (_) => ListView(
@@ -157,7 +291,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ],
               ),
               android: (_) => ListView(
-                 physics: NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 children: <Widget>[
                   Container(
@@ -185,28 +319,28 @@ class _SettingScreenState extends State<SettingScreen> {
                 ],
               ),
             ),
+            // SizedBox(
+            //   height: 30,
+            // ),
+            // Container(
+            //   padding: EdgeInsets.symmetric(vertical: 6),
+            //   decoration: BoxDecoration(
+            //       border: Border.all(width: 1, color: Colors.grey[300]),
+            //       color: Colors.grey[100],
+            //       borderRadius: BorderRadius.circular(30)),
+            //   // height: 20,
+            //   width: deviceData.size.width * 0.5,
+            //   child: Text(
+            //     "SUPPORT",
+            //     textAlign: TextAlign.center,
+            //     style: TextStyle(
+            //       color: Colors.grey,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            // ),
             SizedBox(
-              height: 30,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 6),
-              decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey[300]),
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(30)),
-              // height: 20,
-              width: deviceData.size.width * 0.5,
-              child: Text(
-                "SUPPORT",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
+              height: 20,
             ),
             PlatformWidget(
               ios: (_) => ListView(
@@ -237,7 +371,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ],
               ),
               android: (_) => ListView(
-                 physics: NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 children: <Widget>[
                   Container(
@@ -263,8 +397,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: ListTile(
                       onTap: () {
-                        Navigator.pushNamed(
-                            context, FeedbackScreen.routeName);
+                        Navigator.pushNamed(context, FeedbackScreen.routeName);
                       },
                       title: Text(
                         'Feedback',

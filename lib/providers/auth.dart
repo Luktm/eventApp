@@ -17,6 +17,7 @@ class Auth with ChangeNotifier {
   String _email;
   String _lucky;
   String _name;
+  String _profileImage;
 
   Timer _authTimer;
   DateTime _expiryDate;
@@ -78,9 +79,10 @@ class Auth with ChangeNotifier {
   String get email {
     return _email;
   }
-  // String get name {
-  //   return _u
-  // }
+  
+  String get profileImage {
+    return _profileImage;
+  }
 
   Future<void> login(String email, String password) async {
     print('login functino');

@@ -54,7 +54,7 @@ class _StatefulStateCupertino extends State<CupertinoListTile> {
                 fontSize: 16,
               ),
             ),
-            widget.trailing,
+             if (widget.trailing != null) widget.trailing,
           ],
         ),
       ),
