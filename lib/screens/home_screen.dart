@@ -98,16 +98,32 @@ class _HomeScreen extends State<HomeScreen> {
 
     // _fcm.subscribeToTopic('puppies');
 
-    if (Platform.isIOS) {
+    // if (Platform.isIOS) {
+    //   ioSubscription = _fcm.onIosSettingsRegistered.listen((event) {
+    //     _saveDeviceToken();
+    //   });
 
-      ioSubscription = _fcm.onIosSettingsRegistered.listen((event) {
-        _saveDeviceToken();
-       });
-      
-      _fcm.requestNotificationPermissions(IosNotificationSettings());
-    } else {
-      _saveDeviceToken();
-    }
+    //   _fcm.requestNotificationPermissions(IosNotificationSettings());
+    // } else {
+    //   _saveDeviceToken();
+    // }
+
+    // _fcm.getToken().then((token) => print(token));
+
+    // _fcm.configure(
+    //   onMessage: (Map<String, dynamic> message) async {
+    //     print("onMessage: $message");
+    //   },
+
+    //   onLaunch: (Map<String, dynamic> message) async {
+    //     print("onLaunch: $message");
+    //   },
+    //   onResume: (Map<String, dynamic> message) async {
+    //     print("onResume: $message");
+    //   },
+    // );
+
+    _saveDeviceToken();
 
     super.initState();
   }
@@ -115,20 +131,24 @@ class _HomeScreen extends State<HomeScreen> {
   _saveDeviceToken() async {
     String uid = 'jeffd23';
 
-    String fcmToken = await _fcm.getToken();
+    try {
+      final fcmToken = await _fcm.getToken();
 
-    if (fcmToken != null) {
-      var tokenRef = _db
-          .collection('users')
-          .document(uid)
-          .collection('tokens')
-          .document(fcmToken);
+      if (fcmToken != null) {
+        var tokenRef = _db
+            .collection('users')
+            .document(uid)
+            .collection('tokens')
+            .document(fcmToken);
 
-      await tokenRef.setData({
-        'token': fcmToken,
-        'createdAt': FieldValue.serverTimestamp(),
-        'platform': Platform.operatingSystem
-      });
+        await tokenRef.setData({
+          'token': fcmToken,
+          'createdAt': FieldValue.serverTimestamp(),
+          'platform': Platform.operatingSystem
+        });
+      }
+    } catch (error) {
+      print(error);
     }
   }
 
