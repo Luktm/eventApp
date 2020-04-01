@@ -79,19 +79,18 @@ class Auth with ChangeNotifier {
   String get email {
     return _email;
   }
-  
+
   String get profileImage {
     return _profileImage;
   }
 
   Future<void> login(String email, String password) async {
-    print('login functino');
+
     var url = '$_apiBaseUrl/login?email=$email&password=$password';
 
-    print({'url': url});
-
     try {
-      final response = await http.get(url, headers: {"Content-type": 'application/json'});
+      final response =
+          await http.get(url, headers: {"Content-type": 'application/json'});
 
       final responseData = json.decode(response.body);
 
@@ -111,6 +110,8 @@ class Auth with ChangeNotifier {
 
       // _expiryDate = DateTime.now().add(Duration(seconds: int.parse(responseData['expiresIn'])));
 
+      await getAvatarImg();
+
       final prefs = await SharedPreferences.getInstance();
 
       if (prefs.containsKey('firstTimeLogin')) {
@@ -118,7 +119,6 @@ class Auth with ChangeNotifier {
       }
 
       notifyListeners();
-      print('abc');
 
       final userData = json.encode(
         {
@@ -169,6 +169,8 @@ class Auth with ChangeNotifier {
     _name = extractedUserData['name'];
     // _token = extractedUserData['token'];
     // _expiryDate = expiryDate;
+
+    await getAvatarImg();
 
     notifyListeners();
     // _autoLogout();
@@ -257,4 +259,23 @@ class Auth with ChangeNotifier {
 
   //   _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
   // }
+
+  Future<void> getAvatarImg() async {
+    var avatarUrl = "$_apiBaseUrl/getimage?id=$_id";
+
+    try {
+      final response = await http.get(avatarUrl);
+
+      final responseBody = json.decode(response.body);
+
+      final avatarPngPath = responseBody["avatar"];
+      
+      _profileImage = "https://cems.jnghng.com$avatarPngPath";
+
+      return true;
+      
+    } catch (err) {
+      print(err.toString());
+    }
+  }
 }

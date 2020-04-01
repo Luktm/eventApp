@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
 import '../providers/auth.dart';
 
@@ -43,11 +44,12 @@ class _SettingScreenState extends State<SettingScreen> {
       }
     });
 
+    Provider.of<Auth>(context, listen: false).getAvatarImg();
+
     super.initState();
   }
 
-  Future getImage(ImageSource cameraOption, BuildContext context) async {
-
+  Future getCameraImage(ImageSource cameraOption, BuildContext context) async {
     File imageFile = await ImagePicker.pickImage(
       maxWidth: 800,
       // imageQuality: 10,
@@ -68,11 +70,12 @@ class _SettingScreenState extends State<SettingScreen> {
     String newPath = path.join(dir, '${userName.toLowerCase()}-profile-img.jpg');
     // print('NewPath: $newPath'); // <- /storage/emulated/0/Android/data/com.cspeed.event_app/files/Pictures/newName.jpg
     imageFile = imageFile.renameSync(newPath);
-    print(imageFile);
+    // print({"imageFile": imageFile});
 
     setState(() {
       _storeImage = imageFile;
     });
+    
 
     // final appDir = await syspaths.getApplicationDocumentsDirectory();
     // final fileName = path.basename(imageFile.path);
@@ -85,11 +88,26 @@ class _SettingScreenState extends State<SettingScreen> {
     // });
   }
 
+//  TODO: continue upload
+  // uploadFile() async {
+
+  //   var baseUrl = Provider.of<Auth>(context, listen: false).apiBaseUrl;
+
+    
+  //   var postUri = Uri.parse("$baseUrl/");
+  //   var request = new http.MultipartRequest("POST", postUri);
+  //   request.fields['user'] = 'blah';
+  //   request.files.add(new http.MultipartFile.fromBytes('file', await File.fromUri("<path/to/file").readAsBytes(), contentType: new MediaType('image', 'jpeg')))
+
+  //   request.send().then((response) {
+  //     if (response.statusCode == 200) print("Uploaded!");
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     var deviceData = MediaQuery.of(context);
 
-    final profileImg = Provider.of<Auth>(context, listen: false).profileImage;
     final profileName = Provider.of<Auth>(context, listen: false).name;
 
     return SizedBox.expand(
@@ -113,67 +131,76 @@ class _SettingScreenState extends State<SettingScreen> {
                       showPlatformDialog(
                         context: context,
                         builder: (BuildContext context) => Dialog(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10.0),
-                              ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10.0),
                             ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Column(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 15),
-                                      child: Text(
-                                        'Change Profile Picture',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Column(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15),
+                                    child: Text(
+                                      'Change Profile Picture',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    Divider(),
-                                    FlatButton(
-                                      onPressed: () =>
-                                          getImage(ImageSource.camera, context),
-                                      child: Text(
-                                        'Upload from Camera',
-                                      ),
+                                  ),
+                                  Divider(),
+                                  FlatButton(
+                                    onPressed: () => getCameraImage(
+                                        ImageSource.camera, context),
+                                    child: Text(
+                                      'Upload from Camera',
                                     ),
-                                    FlatButton(
-                                      onPressed: () => getImage(
-                                          ImageSource.gallery, context),
-                                      child: Text(
-                                        'Upload from library',
-                                      ),
+                                  ),
+                                  FlatButton(
+                                    onPressed: () => getCameraImage(
+                                        ImageSource.gallery, context),
+                                    child: Text(
+                                      'Upload from library',
                                     ),
-                                    Divider(),
-                                    FlatButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text(
-                                        'Cancel',
-                                        style: TextStyle(color: Colors.red),
-                                      ),
+                                  ),
+                                  Divider(),
+                                  FlatButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      'Cancel',
+                                      style: TextStyle(color: Colors.red),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            )),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       );
                     },
-                    child: CircleAvatar(
-                      radius: 30,
-                      backgroundColor: HexColor.primaryColor,
-                      backgroundImage: profileImg == null
-                          ? _storeImage == null
-                              ? AssetImage(
-                                  'assets/images/profile-placeholder.jpg')
-                              : FileImage(_storeImage)
-                          : NetworkImage(profileImg),
-                    ),
+                    child: Consumer<Auth>(builder: (context, auth, _) {
+                      return CircleAvatar(
+                        radius: 30,
+                        backgroundColor: HexColor.primaryColor,
+                        child: ClipOval(
+                          child: SizedBox(
+                            width: 180,
+                            height: 180,
+                            child: _storeImage != null
+                                ? Image.file(
+                                    _storeImage,
+                                    fit: BoxFit.fill,
+                                  )
+                                : Image.network(auth.profileImage),
+                          ),
+                        ),
+                      );
+                    }),
                   ),
                   SizedBox(
                     width: 10,
